@@ -9,7 +9,8 @@ const config = {
     min: 5
   },
   port: 3000,
-  secretOrKey: 'PlusUltra'
+  secretOrKey: 'PlusUltra',
+  saltRounds: 10
 }
 
 module.exports = config;
