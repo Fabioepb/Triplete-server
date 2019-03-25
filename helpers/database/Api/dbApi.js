@@ -11,6 +11,16 @@ const handler = async (query, params, data = false, callback = db.none) => {
   }
 }
 
+const handlerWithNoParams = async (query, callback = db.one) => {
+  try {
+    const data = await callback(query);
+    return data; 
+  } catch (error) {
+    console.log(error);
+    throw Error(error);
+  }
+}
+
 //Order Matters! See the query
 exports.findUser =  (...params) => {
   return handler(queries.findUser, params, true, db.one);
@@ -19,3 +29,17 @@ exports.findUser =  (...params) => {
 exports.signUp = (...params) => {
   return handler(queries.signUp, params);
 }
+
+exports.getTeams = () => {
+  return handlerWithNoParams(queries.getTeams, db.many);
+}
+
+exports.getTeamsByName = (teams_name) => {
+  return handler(queries.getTeamsByName, [teams_name], true, db.any);
+}
+
+exports.getMatch = (tournament_id) => {
+  return handler(queries.getMatchs, [tournament_id], true, db.any);
+}
+
+

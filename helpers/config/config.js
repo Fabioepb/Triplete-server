@@ -2,9 +2,9 @@ const config = {
   connection: {
     host: 'localhost',
     port: 5432,
-    database: 'triplete-db',
+    database: 'triplete-db2',
     user: 'postgres',
-    password: 'e26638992',
+    password: 'masterkey',
     max: 20,
     min: 5
   },
