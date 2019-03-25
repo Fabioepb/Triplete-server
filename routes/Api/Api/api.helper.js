@@ -29,12 +29,12 @@ exports.getMatch = async (req, res, next) => {
       let match2 = _data[i+1];
       let {match_played, match_winner, match_date} = match;
       let teams = {
-        team1: {
+        local: {
           name: match.status_description === 'Local' ? match.teams_name : match2.teams_name,
           status: 'Local',
           score: match.status_description === 'Local' ? match.team_score : match2.team_score
         },
-        team2: {
+        visitante: {
           name: match2.status_description === 'Visitante' ? match2.teams_name : match.teams_name,
           status: 'Visitante',
           score: match2.status_description === 'Visitante' ? match2.team_score : match.team_score
