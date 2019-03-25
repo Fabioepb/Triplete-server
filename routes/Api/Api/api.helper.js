@@ -54,6 +54,15 @@ exports.getMatch = async (req, res, next) => {
   }
 }
 
+exports.getTournaments = async (req, res, next) => {
+  try {
+    const data = await dbApi.getTournaments();
+    res.status(200).json({status: 200, message: 'Tournaments fetched', data});
+  } catch (error) {
+    badResponse(error, res);
+  }
+}
+
 
 function badResponse(error, res) {
   console.log(error);
