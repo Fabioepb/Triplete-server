@@ -9,6 +9,7 @@ var root = require('./routes/root');
 var app = express();
 
 // view engine setup
+app.set('modules', path.join(__dirname, 'node_modules'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
