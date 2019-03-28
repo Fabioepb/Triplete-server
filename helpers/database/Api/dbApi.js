@@ -46,3 +46,11 @@ exports.getTournaments = () => {
   return handlerWithNoParams(queries.getTournaments, db.many);
 }
 
+exports.tournamentRanking = (tournament_id) => {
+  return handler(queries.tournamentRanking, [tournament_id], true, db.any);
+}
+
+exports.tournamentInfo = (tournament_id) => {
+  return handler(queries.tournamentInfo, [tournament_id], true, db.one);
+}
+

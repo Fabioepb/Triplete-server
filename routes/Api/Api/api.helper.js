@@ -63,6 +63,21 @@ exports.getTournaments = async (req, res, next) => {
   }
 }
 
+exports.allTournamentInfo = async (req, res, next) => {
+  const {tournament_id} = req.params;
+  try {
+    const ranking = await dbApi.tournamentRanking(tournament_id);
+    const info = await dbApi.tournamentInfo(tournament_id);
+    const data = {
+      ranking,
+      info
+    }
+    res.status(200).json({status: 200, message: 'All tournament info fetched', data});
+  } catch (error) {
+    badResponse(error, res);
+  }
+}
+
 
 function badResponse(error, res) {
   console.log(error);
