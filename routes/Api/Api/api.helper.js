@@ -1,4 +1,5 @@
 const dbApi = require('../../../helpers/database/Api/dbApi');
+const {format} = require('date-fns');
 
 exports.getTeams = async (req, res, next) => {
   try {
@@ -28,6 +29,7 @@ exports.getMatch = async (req, res, next) => {
       let match = _data[i];
       let match2 = _data[i+1];
       let {match_played, match_winner, match_date} = match;
+      match_date = format(match_date, 'MM/DD/YYYY');
       let teams = {
         local: {
           name: match.status_description === 'Local' ? match.teams_name : match2.teams_name,
@@ -67,7 +69,8 @@ exports.allTournamentInfo = async (req, res, next) => {
   const {tournament_id} = req.params;
   try {
     const ranking = await dbApi.tournamentRanking(tournament_id);
-    const info = await dbApi.tournamentInfo(tournament_id);
+    let info = await dbApi.tournamentInfo(tournament_id);
+    info.next_match = format(info.next_match, 'MM/DD/YYYY');
     const data = {
       ranking,
       info
