@@ -54,3 +54,17 @@ exports.tournamentInfo = (tournament_id) => {
   return handler(queries.tournamentInfo, [tournament_id], true, db.one);
 }
 
+exports.updateUser = (userId, userName, userEmail, userCreditCard, userBankAccount) => {
+  return handler(queries.putProfile, [userName, userEmail, userCreditCard, userBankAccount, userId]);
+}
+
+exports.postBet = (matchId, userId, betPayment, betOdd, team1Score, team2Score) => {
+  return handler(queries.postBet, [matchId, userId, betPayment, betOdd, team1Score, team2Score], true, db.one);
+}
+
+exports.getBets = (userId) => {
+  return handler(queries.getBets, [userId], true, db.any);
+}
+
+//exports.deleteBet = (bet)
+
