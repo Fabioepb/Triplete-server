@@ -2,8 +2,10 @@ const dbApi = require('../../helpers/database/Api/dbApi');
 
 exports.postBet = async (req, res) => {
   try {
+    console.log(req.body)
+    console.log(req.user.id)
     const { matchId, betPayment, betOdd, team1Score, team2Score } = req.body;
-    data = await dbApi.postBet(matchId, req.user.id, betPayment, betOdd, team1Score, team2Score, new Date());
+    data = await dbApi.postBet(matchId, req.user.id, betPayment, betOdd, team1Score, team2Score);
     console.log(data);
     res.json({status: 201, message: 'apuesta creada', data});
   } catch (error) {
@@ -14,7 +16,9 @@ exports.postBet = async (req, res) => {
 
 exports.getBets = async (req, res) => {
   try {
-    const {range, date} = req.body;
+    const range  = req.params.range;
+    const  date = req.params.date;
+
     let data;
     if (range === 'day'){
       data = await dbApi.getBetsByDay(date);

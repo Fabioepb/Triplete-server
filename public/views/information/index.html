@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Triplete | Informacion</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../../css/bootstrap.css">
     <link rel="stylesheet" href="../../css/informacion.css">
     <style>
 
@@ -58,10 +58,6 @@
                                           <div class="input-group mb-3">
 
                                                   <select class="custom-select " id="torneos" aria-label="Example select with button addon">
-                                                    <option selected>torneos...</option>
-<!--                                                       <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option> -->
                                                   </select>
                                                   <div class="input-group-prepend">
                                                           <button class="btn btn-outline-success btn-add-panel" type="button" id="button-addon2">Search</button>
@@ -83,11 +79,12 @@
       </div>
   </div>
     <script type="text/javascript" src="../../components/navbar.js"></script>
-    <script type="text/javascript" src="/popper.js/dist/umd/popper.js"></script>
-    <script type="text/javascript" src="/jquery/dist/jquery.js"></script>
-    <script type="text/javascript" src="/bootstrap/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/popper.js"></script>
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
   <script>
       var hash = 1;
+      let userData = JSON.parse(localStorage.getItem('session'));
 
       $("#clearMatches").on("click", ()=>{
         removeSearch("#matchesList")
@@ -121,16 +118,19 @@
         '</div>'
         )
       }
+
+
       let showModal = (obj,index) =>{
         $('#'+index).on('click', ()=>{
           console.log(obj)
+          console.log(index)
           var x = `<div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content" style="background-color:#212529;color:white;">
                       <div class="modal-header">
                         <h5 class="modal-title h4 text-center" id="myExtraLargeModalLabel">Apuesta</h5>
                         <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">×</span>
+                          <span aria-hidden="true">x</span>
                         </button>
                       </div>
                       <div class="modal-body">
@@ -141,33 +141,39 @@
                         <div class="row">
                           <div class="col text-right" >
                             <div id='nombrelocal' class='d-inline'></div>                            
-                            <input type="number" class="form-control bet-input w-25" oninput="validity.valid||(value='');" min='0' placeholder="0" aria-label="Username" aria-describedby="basic-addon1">
+                            <input type="number" id="team1" class="form-control bet-input w-25" oninput="validity.valid||(value='');" min='0' placeholder="0" aria-label="Username" aria-describedby="basic-addon1">
                           </div>
                           <div class="divisor"></div>
                           <div class="col text-left">
-                            <input type="number" min='0' class="form-control bet-input w-25" oninput="validity.valid||(value='');"  placeholder="2" aria-label="Username" aria-describedby="basic-addon1">
+                            <input type="number" min='0' id="team2" class="form-control bet-input w-25" oninput="validity.valid||(value='');"  placeholder="2" aria-label="Username" aria-describedby="basic-addon1">
                             <div id='nombrevisitante' class='d-inline'></div>                            
                       
                             </div>
                         </div>
-                        <br>
-                        <br>
                         <div class="text-center">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" for="inputGroupSelect01">Options</label>
-                                    </div>
-                                    <select class="custom-select" id="inputGroupSelect01">
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                    </div>
+                        <label style="color:#fff;display:block">Average:</label>
+                        <div class="row">
+                        <div class=" col text-left">
+                        <input class="form-control bet-input w-25 ml-5" type="number" id="average_team1" oninput="validity.valid||(value='');" min='0' placeholder="0" disabled>
+                        </div>
+                        <div class=" col text-right">
+                        <input value= "2" class="form-control bet-input w-25 mr-5" type="number" id="average_team2" oninput="validity.valid||(value='');" min='0' placeholder="0" disabled>
+                        </div>
+                        </div>
+                        </div>
+
+                        <div class="text-center">
+
+                        <label style="color:#fff;display:block">Monto:</label>
+                        <input class="form-control bet-input w-15" type="number" id="betPayment" oninput="validity.valid||(value='');" min='0' placeholder="0">
+
+                        </div>
+                        <div class="text-center">
+                        <label style="color:#fff;display:block">Odd:</label>
+                        <input class="form-control bet-input w-15" type="number" id="betOdd" oninput="validity.valid||(value='');" min='0' placeholder="0" disabled>
                         </div>
                         <br>
-                        <br>
-                        <button class="btn btn-outline-success mt-2 text-center" id="bet" style="margin-left: 40%;">Apostar</button>
+                        <button class="btn btn-outline-success mt-2 text-center" onclick="bet(${obj.match_id})" style="margin-left: 42%;">Apostar</button>
                       </div>
                     </div>
                   </div>
@@ -176,7 +182,7 @@
             $('#nombres')[0].innerHTML = `<p style="padding-top: 7%;">${obj.teams.local.name} vs ${obj.teams.visitante.name}</p>`
             $('#nombrelocal')[0].innerHTML = obj.teams.local.name
             $('#nombrevisitante')[0].innerHTML = obj.teams.visitante.name
-            
+            $('#betOdd')[0].value =((Math.random()+0.2)/Math.random())*10                     
         
           })
       }
@@ -186,7 +192,43 @@
                 </br>Fecha:${obj.match_date}</button>`
             )
         }
+let bet = (matchId)=>{
+	data = {
+    matchId:matchId,
+    betPayment:$('#betPayment')[0].value,
+    betOdd:$('#betOdd')[0].value,
+    team1Score:$('#team1')[0].value,
+    team2Score:$('#team2')[0].value
+		
+    }
+    console.log(data)
+	let url = "http://localhost:3000/bet"//falta
 
+        fetch(url,{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userData.token}`
+          },
+          credentials: 'include',
+	        body:JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(response=>{
+          console.log(response)
+          if(response.status == 200){
+		console.log(response)
+            
+          }else{
+		console.log(response)
+	}
+
+        })
+        .catch(error=>{
+          console.log(error)
+        })
+
+}
         let selectedTournament = 1;
 
 
@@ -202,6 +244,7 @@
         )
       }
 
+
       let removeSearch = (element) =>{
         $(element).empty()
       }
@@ -211,9 +254,9 @@
         let search = $("#searchTeam")[0].value;
 
         if(search.trim() == ''){
-          url = "http://localhost:3500/Teams"
+          url = "http://localhost:3000/Teams"
         }else{
-          url= "http://localhost:3500/Teams/" + search
+          url= "http://localhost:3000/Teams/" + search
         }
 
         fetch(url,{
@@ -241,8 +284,8 @@
 
 
 
-      let searchMatches = () =>{
-        fetch("http://localhost:3500/Matchs/"+selectedTournament,{
+    let searchMatches = () =>{
+        fetch("http://localhost:3000/Matchs/"+selectedTournament,{
           method: 'GET',
           headers: {
 				    'Content-Type': 'application/json'
@@ -262,6 +305,7 @@
         })
       }
 
+
       let annexTourney = (obj) =>{
         $("#torneos").append(
           `<option value="1" onclick="changeSearch('${obj.tournaments_name}',${obj.tournaments_id})">${obj.tournaments_name}</option>`
@@ -276,7 +320,7 @@
         removeSearch("#matchesList")
       })
 
-      fetch('http://localhost:3500/Tournaments',{
+      fetch('http://localhost:3000/Tournaments',{
         method: 'GET',
         headers: {
 				  'Content-Type': 'application/json'
@@ -294,7 +338,7 @@
         }
       })
 
-      fetch('http://localhost:3500/Teams',{
+      fetch('http://localhost:3000/Teams',{
           method: 'GET',
           headers: {
 				    'Content-Type': 'application/json'
@@ -310,6 +354,7 @@
               addTeam(team)
             });
           }})
+
 
       $("#buttonTeam").on("click", ()=>{
         searchTeams()

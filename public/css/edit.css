@@ -1,14 +1,25 @@
 .contain{
     background-color:#689f38; 
-    border-top-right-radius: 15px; 
-    border-top-left-radius: 15px;
+    border-radius: 15px; 
 }
 
 h2{
     text-shadow: 4px 4px 12px #505050; 
     font-size: 50px;
 }
-
+.divisor {
+    border: white solid 3px;
+    width: 4%;
+    height: 0%;
+    margin-top: 3%;
+}
+.match {
+    background: linear-gradient(to bottom, rgba(42, 42, 42, 0) 70%, rgb(42, 42, 42) 100%), url('../utils/background.jpg');
+    background-size: cover;
+    width: 98%;
+    height: 15%;
+    margin-left: 1%;
+}
 .display-1{
     font-size: 50px
 }

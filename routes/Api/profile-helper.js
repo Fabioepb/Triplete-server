@@ -16,6 +16,7 @@ exports.updateUser = async (req, res) => {
 exports.getUserData = async (req, res) => {
 	try{
 		let data = {};
+		console.log(req.user.id)
 		data.user = await dbApi.getUserData(req.user.id);
 		data.bets = await dbApi.getProfileBets(req.user.id);
 		data.won = 0;

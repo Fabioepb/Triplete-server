@@ -37,11 +37,16 @@ exports.getTeams = () => {
 exports.getTeamsByName = (teams_name) => {
   return handler(queries.getTeamsByName, [teams_name], true, db.any);
 }
-
+exports.getTeamsById = (teams_id) => {
+  return handler(queries.getTeamsById, [teams_id], true, db.one);
+}
 exports.getMatch = (tournament_id) => {
   return handler(queries.getMatchs, [tournament_id], true, db.any);
 }
 
+exports.getAllCountrys = () => {
+  return handler(queries.getAllCountrys, db.many);
+}
 exports.getTournaments = () => {
   return handlerWithNoParams(queries.getTournaments, db.many);
 }

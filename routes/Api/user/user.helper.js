@@ -25,8 +25,10 @@ exports.login = async (req, res, next) => {
         id: user.users_id,
         type: user.type_users_id
       };
+      const type =user.type_users_id;
+      const id =user.users_id;
       const token = jws.sign(payload, config.secretOrKey);
-      res.status(200).json({status:200, username, token, message: 'Loged User'});
+      res.status(200).json({status:200, username, type,id, token, message: 'Loged User'});
     } else {
       res.status(200).json({status: 401, message: 'Incorrect Password or Username'});
     }

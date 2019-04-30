@@ -9,7 +9,14 @@ exports.getTeams = async (req, res, next) => {
     badResponse(error, res);
   }
 }
-
+exports.getAllCountrys = async (req, res, next) => {
+  try {
+    const data = await dbApi.getAllCountrys();
+    res.status(200).json({status: 200, message: 'Country fetched', data});
+  } catch (error) {
+    badResponse(error, res);
+  }
+}
 exports.getTeamsByName = async (req, res, next) => {
   try {
     const { teams_name } = req.params;
@@ -19,7 +26,15 @@ exports.getTeamsByName = async (req, res, next) => {
     badResponse(error, res);
   }
 }
-
+exports.getTeamsById = async (req, res, next) => {
+  try {
+    const teams_id = req.params.teams_id;
+    const data = await dbApi.getTeamsById(teams_id);
+    res.status(200).json({status: 200, message: 'Team fetched', data});
+  } catch (error) {
+    badResponse(error, res);
+  }
+}
 exports.getMatch = async (req, res, next) => {
   try {
     const { tournament_id } = req.params;
@@ -28,7 +43,7 @@ exports.getMatch = async (req, res, next) => {
     for (let i = 0; i < _data.length; i += 2) {
       let match = _data[i];
       let match2 = _data[i+1];
-      let {match_played, match_winner, match_date} = match;
+      let {match_played, match_winner, match_date, match_id} = match;
       match_date = format(match_date, 'MM/DD/YYYY');
       let teams = {
         local: {
@@ -43,6 +58,7 @@ exports.getMatch = async (req, res, next) => {
         }
       }
       let _match = {
+        match_id,
         match_played,
         match_winner,
         match_date,
@@ -158,7 +174,9 @@ exports.createTeam = async (req, res, next) => {
 }
 
 exports.updateTeam = async (req, res, next) => {
-  const {name, desc, country, teamId} = req.body;
+  const {name, desc, country} = req.body;
+  const teamId = req.params.id
+  console.log(req.body)
   try{
     await dbApi.editTeam(name, null, Math.floor(Math.random() * 30), desc, country, teamId);
     res.status(200).json({status:200, message: 'team updated'});
@@ -169,6 +187,7 @@ exports.updateTeam = async (req, res, next) => {
 
 exports.deleteTeam = async (req, res, next) => {
   const {teamId} = req.body;
+  console.log(req.body.teamId)
   try{
     await dbApi.deleteMatch(teamId);
     res.status(200).json({status:200, message: 'team deleted'});

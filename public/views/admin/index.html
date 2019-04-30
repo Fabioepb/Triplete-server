@@ -1,19 +1,28 @@
-<html>
+﻿<html>
 
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Triplete | Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../../css/bootstrap.css">
     <link rel="stylesheet" href="../../css/informacion.css">
     <style>
 
     </style>
+        <script>
+            window.addEventListener("DOMContentLoaded",()=>{
+                console.log("bagre");
+                if (!localStorage.getItem("session")){
+                  location.href = '..'
+                }
+              }
+            ) 
+            </script>
 </head>
 
 <body>
-    <nav-bar inref="../login" upref="../register" pref="../profile" href="../" bref="../bet" iref="../informacion"></nav-bar>
+    <nav-bar inref="../login" upref="../register" pref="../admin" iref="../repo" href="../" bref="../bet"></nav-bar>
     <div class="container bg-dark mt-5" style="border-radius: 10px">
         <nav class="mt-2">
             <div class="nav nav-tabs mt-2" id="nav-tab" role="tablist">
@@ -35,9 +44,9 @@
                     </div>
                     <div class="col-sm-4">
                         <button class="btn btn-outline-danger mt-2" id="clearTeams">Limpiar resultados</button>
-                        <button type="button" class="btn btn-outline-warning mt-2 text-center" data-toggle="modal" data-target=".bd-example-modal-md">Añadir equipo</button>
+                        <button type="button" class="btn btn-outline-warning mt-2 text-center" data-toggle="modal" data-target="#addTeamM">Añadir equipo</button>
 
-                        <div class="modal fade bd-example-modal-md" tabindex="-2" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+                        <div class="modal fade bd-example-modal-md" id="addTeamM" tabindex="-2" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content" style="background-color:#212529;color:white;">
                               <div class="modal-header">
@@ -50,20 +59,22 @@
                                 <div class="row">
                                         <div class="form mb-3" style="width: 80%;margin-left: 10%;">
                             <label class="text-left" for="name">Nombre del Equipo</label>
-                            <input type="text" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Ej: Barcelona">
+                            <input type="text" class="form-control" id="name_team" aria-describedby="nameHelp" placeholder="Ej: Barcelona">
                             <label class="text-left my-2" for="country">Pais</label>
-                            <input type="text" class="form-control" id="country" aria-describedby="countryHelp" placeholder="Ej: España">
-                            <label class="text-left my-2" for="descrip">Descripcion</label>
-                            <input type="text" class="form-control" placeholder="Ej: Geometriaenel8vo" aria-label="descrip" id="descrip">
+                            <select class="custom-select " id="team_c" aria-label="Example select with button addon">
+                              </select>
+                             <label class="text-left my-2" for="descrip">Descripcion</label>
+                            <input type="text" class="form-control" placeholder="Ej: Equipo de futbol" aria-label="descrip" id="descrip">
                             <label class="text-left my-2" for="tournent">Torneo en el que participa</label>
-                            <input type="tournent" class="form-control" placeholder="Ej: The Champions League" aria-label="tournent" id="tournent">
-                        </div>
+                            <select class="custom-select " id="team_t" aria-label="Example select with button addon">
+                            </select>                        
+                                      </div>
         
                                 </div>
                                 <br>
                                 <br>
                                 <div class="text-center">
-                                        <button class="btn btn-outline-success mt-2 text-center" id="save" >Añadir</button>
+                                        <button class="btn btn-outline-success mt-2 text-center" onclick="insertTeam()" >Añadir</button>
         
                                   </div>                        
                                 </div>
@@ -84,173 +95,479 @@
                                             <div class="input-group mb-3">
 
                                                     <select class="custom-select " id="torneos" aria-label="Example select with button addon">
-                                                      <option selected>torneos...</option>
-<!--                                                       <option value="1">One</option>
-                                                      <option value="2">Two</option>
-                                                      <option value="3">Three</option> -->
+
                                                     </select>
                                                     <div class="input-group-prepend">
-                                                            <button class="btn btn-outline-success btn-add-panel" type="button" id="button-addon2">Search</button>
+                                                            <button class="btn btn-outline-success btn-add-panel" type="button" id="button-addon2" onclick="searchMatches()">Search</button>
                                                         </div>
                                                   </div>
                                           
                             </div>
                             <div class="col-sm-4">
                                 <button class="btn btn-outline-danger mt-2" id="clearMatch">Limpiar resultados</button>
-                                <button class="btn btn-outline-warning mt-2" id="createMatch">Crear partido</button>
-                            </div>
+                                <button type="button" class="btn btn-outline-warning mt-2 text-center" data-toggle="modal" data-target="#addMatchM">Añadir Partido</button>
+
+                                <div class="modal fade bd-example-modal-md" id="addMatchM" tabindex="-2" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content" style="background-color:#212529;color:white;">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title h4 text-center" id="add">Añadir Partido</h5>
+                                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">×</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <div class="row">
+                                                <div class="form mb-3" style="width: 80%;margin-left: 10%;">
+                                    <label class="text-left" for="name">Local</label>
+                                    <select class="custom-select " id="match_team1" aria-label="Example select with button addon">
+                                      </select>
+                                    <label class="text-left my-2" for="country">Visitante</label>
+                                    <select class="custom-select " id="match_team2" aria-label="Example select with button addon">
+                                      </select>
+                                    <label class="text-left my-2" for="descrip">Fecha</label>
+                                    <input type="date" class="form-control" placeholder="2019-4-29" aria-label="descrip" id="match_date">
+                                    <label class="text-left my-2" for="tournent">Torneo en el que participa</label>
+                                    <select class="custom-select " id="match_t" aria-label="Example select with button addon">
+                                    </select>                        
+                                              </div>
+                
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <div class="text-center">
+                                                <button class="btn btn-outline-success mt-2 text-center" onclick="insertMatch()" >Añadir</button>
+                
+                                          </div>                        
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>                            
+                              </div>
                         </div>
                 <div class="list-group mt-2 pb-2" id="matchesList">
                 </div>
+             </div>
+          <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+            <div class="searchRow">
+              <button type="button" class="btn btn-outline-warning mt-2 text-center" data-toggle="modal" data-target="#addTorM">Añadir Torneo</button>
             </div>
 
-            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">torneitos</div>
-        </div>
+            <div class="modal fade bd-example-modal-md" id="addTorM" tabindex="-2" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="background-color:#212529;color:white;">
+                  <div class="modal-header">
+                    <h5 class="modal-title h4 text-center" id="add">Añadir Torneo</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row">
+                            <div class="form mb-3" style="width: 80%;margin-left: 10%;">
+                <label class="text-left" for="name">Nombre del Torneo</label>
+                <input type="text" class="form-control" id="name_tor" aria-describedby="nameHelp" placeholder="Ej: Copa del Rey">
+                <label class="text-left my-2" for="country">Pais</label>
+                <select class="custom-select " id="tor_c" aria-label="Example select with button addon">
+                  </select>
+                  <label class="text-left my-2" for="tournent">Tipo de torneo</label>
+                <select class="custom-select " id="type_tor" aria-label="Example select with button addon">
+                    <option value="1">Copa</option>
+
+                </select>                        
+                          </div>
+
+                    </div>
+                    <br>
+                    <br>
+                    <div class="text-center">
+                            <button class="btn btn-outline-success mt-2 text-center" onclick="insertTor()" >Añadir</button>
+
+                      </div>                        
+                    </div>
+                  </div>
+                </div>
+            </div>             <div class="list-group mt-2 pb-2" id="tourneyList"></div>
+          </div>        
+          </div>
     </div>
     <script type="text/javascript" src="../../components/navbar.js"></script>
-    <script type="text/javascript" src="../../../node_modules/popper.js/dist/umd/popper.js"></script>
-    <script type="text/javascript" src="../../../node_modules/jquery/dist/jquery.js"></script>
-    <script type="text/javascript" src="../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/popper.js"></script>
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
     <script>
-        var hash = 1;
+      var hash = 1;
 
-        let addTeam = (obj) => {
-            $("#accordionTeam").append(
-                '<div class="panel panel-default mb-1 ml-3 col" style="margin-right: 2%">' +
-                '<div class="panel-heading" role="tab" id="heading_' + ++hash + '">' +
-                '<h4 class="panel-title">' +
-                '<a role="button" data-toggle="collapse" data-parent="#accordionTeam" href="#collapse_' + hash + '" aria-expanded="true" aria-controls="collapse_' + hash + '">' +
-                obj.name +
-                '</a>' +
-                '</h4>' +
-                '</div>' +
-                '<div id="collapse_' + hash + '" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading_' + hash + '">' +
-                '<div class="panel-body">' +
-                '<div class="row mb-2">' +
-                '<div class="col-sm-6 text-break bg-dark rounded" style="margin-left:10px">' +
-                "Descripcion: <br/> " + obj.status +
-                "</div>" +
-                '<div class="col-sm-3 bg-dark rounded" style="margin-left: 10px">' +
-                " Pais: <br/>" + obj.country +
-                "<br/>" +
-                "Participa en:</br>" +
-                "LA CHAMPION LIG MMGB" +
-                "</div>" +
-                '<div class="col-sm-2 bg-dark rounded" style="margin-left: 10px">' +
-                '<button class="btn btn-outline-danger mt-2" id="clearTeams" style="width:95%">Borrar</button>'+
-                ` <button type="button" class="btn btn-outline-warning mt-2 text-center" data-toggle="modal" data-target=".bd-example-modal-xl" style="width:95%">Modificar</button>
+$("#clearMatches").on("click", ()=>{
+  removeSearch("#matchesList")
+})
 
-                <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content" style="background-color:#212529;color:white;">
-                      <div class="modal-header">
-                        <h5 class="modal-title h4 text-center" id="myExtraLargeModalLabel">Modificar</h5>
-                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">×</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <div class="text-center match">
-                          <p style="padding-top: 7%;">${obj.name}</p>
-                            </div>
-                        <br>
-                        <br>
-                        <div class="row">
-                                <div class="form mb-3" style="width: 80%;margin-left: 10%;">
-                    <label class="text-left" for="name">Nombre del Equipo</label>
-                    <input type="text" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Ej: Barcelona">
-                    <label class="text-left my-2" for="country">Pais</label>
-                    <input type="text" class="form-control" id="country" aria-describedby="countryHelp" placeholder="Ej: España">
-                    <label class="text-left my-2" for="descrip">Descripcion</label>
-                    <input type="text" class="form-control" placeholder="Ej: Geometriaenel8vo" aria-label="descrip" id="descrip">
-                    <label class="text-left my-2" for="tournent">Torneo en el que participa</label>
-                    <input type="tournent" class="form-control" placeholder="Ej: The Champions League" aria-label="tournent" id="tournent">
-                </div>
+let addTeam = (obj) =>{
+  console.log(obj)
+  $("#accordionTeam").append(
+    '<div class="panel panel-default mb-1 ml-3 col" style="margin-right: 2%">'+
+    '<div class="panel-heading" role="tab" id="heading_'+ ++hash +'">'+
+      '<h4 class="panel-title">'+
+        '<a role="button" data-toggle="collapse" data-parent="#accordionTeam" href="#collapse_'+ hash +'" aria-expanded="true" aria-controls="collapse_'+hash+'">'+
+            obj.teams_name+
+        '</a>'+
+      '</h4>'+
+    '</div>'+
+    '<div id="collapse_'+hash+'" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading_'+hash+'">'+
+      '<div class="panel-body">'+
+        '<div class="row mb-2">'+
+          '<div class="col-sm-8 text-break bg-dark rounded" style="margin-left:10px">'+  
+            "Descripcion: <br/> "+obj.team_description+
+          "</div>"+
+          '<div class="col-sm-3 bg-dark rounded" style="margin-left: 10px">'+  
+            " Pais: <br/>" +obj.country_name+
+            "<br/>"+
+            "Promedio:</br>"+
+            obj.teams_average+
+          "</div>"+
+          `<button class="btn btn-danger mt-2 ml-5" onclick="deleteTeam(${obj.teams_id})">Eliminar</button>
+          <a href="../update?id=${obj.teams_id}" class="btn btn-warning mt-2 ml-5">Modificar</a>`+
+        "</div>"+
+      '</div>'+
+    '</div>'+
+  '</div>'
+  )
+}
 
-                        </div>
-                        <br>
-                        <br>
-                        <div class="text-center">
-                                <button class="btn btn-outline-success mt-2 text-center" id="save" >Guardar</button>
+let addMatch = (obj) => {
+      $("#matchesList").append(
+          `<a class="btn list-group-item list-group-item-action text-center d-inline w-90" '>${obj.teams.local.name} vs ${obj.teams.visitante.name} 
+          </br>Fecha:${obj.match_date}</a>
+	<a class="btn btn-danger d-inline" onclick="deleteMatch(${obj.match_id})">Eliminar Partido</a>`
+      )
+  }
 
-                          </div>                        
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>` + 
-                "</div>" +
-                "</div>" +
-                '</div>' +
-                '</div>' +
-                '</div>'
-            )
-        }
+  let selectedTournament = 1;
 
-        let addMatch = (obj) => {
-            $('#torneos').append(` <option value="1">Champions</option>`);
-            $("#matchesList").append(
-                `<button type="button" class="btn list-group-item list-group-item-action text-center" data-toggle="modal" data-target=".bd-example-modal-xl">${obj.team1} vs ${obj.team2} 
-                </br>Fecha:${obj.date}</button>
+let deleteTourney = (id) =>{
+  let url = "http://localhost:3000/Tourny/"+id 
+  fetch(url,{
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+  })
+  .then(res => res.json())
+  .then(response=>{
+    console.log(response)
+    if(response.status == 200){
+      window.location.reload();
+    }else{
+      console("status"+response.status+", msg:"+response.message)
+    }
 
-                <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content" style="background-color:#212529;color:white;">
-                      <div class="modal-header">
-                        <h5 class="modal-title h4 text-center" id="myExtraLargeModalLabel">Apuesta</h5>
-                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">×</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <div class="text-center match">
-                          <p style="padding-top: 7%;">${obj.team1} vs ${obj.team2}</p>
-                            </div>
-                        <br>
-                        <br>
-                        <div class="row">
-                          <div class="col text-right">
-                            ${obj.team1}
-                            <input type="text" class="form-control bet-input" placeholder="0" aria-label="descrip" aria-describedby="basic-addon1">
-                          </div>
-                          <div class="divisor"></div>
-                          <div class="col text-left">
-                            <input type="text" class="form-control bet-input" placeholder="2" aria-label="descrip" aria-describedby="basic-addon1">
-                            ${obj.team2}
-                          </div>
-                        </div>
-                        <br>
-                        <br>
-                        <div class="text-center">
-                          <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Metodos de pago
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item" href="#">Action</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                          </div>                        
-                        </div>
-                        <br>
-                        <br>
-                        <button class="btn btn-outline-success mt-2 text-center" id="bet" style="margin-left: 40%;">Apostar</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-`
-            )
-        }
+  })
+  .catch(error=>{
+    console.log(error)
+  })  
+}
 
-        let removeSearch = (element) => {
-            $(element).empty()
-        }
+let deleteMatch = (id) =>{
+  let url = "http://localhost:3000/Matchs/"+id 
+  fetch(url,{
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+  })
+  .then(res => res.json())
+  .then(response=>{
+    console.log(response)
+    if(response.status == 200){
+      window.location.reload();
+    }else{
+      console("status"+response.status+", msg:"+response.message)
+    }
 
+  })
+  .catch(error=>{
+    console.log(error)
+  })  
+}
+
+let deleteTeam = (id) =>{
+  data={
+    teamId:id
+  }
+  let url = "http://localhost:3000/Teams/" 
+  fetch(url,{
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+    body:JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(response=>{
+    console.log(response)
+    if(response.status == 200){
+      window.location.reload();
+    }else{
+      console("status"+response.status+", msg:"+response.message)
+    }
+
+  })
+  .catch(error=>{
+    console.log(error)
+  })  
+}
+
+let changeSearch = (text,id) =>{
+selectedTournament = id
+document.getElementById('searchInput').value = text
+}
+
+let addTourney = (obj) =>{
+  $("#tourneyList").append(
+    `<a href="../tourney?id=${obj.tournaments_id}" class="list-group-item list-group-item-action text-center">`+ obj.tournaments_name +'</a>'+
+	`<a class="btn btn-danger mb-2" onclick="deleteTorney(${obj.tournaments_id})">Eliminar Torneo</a>`
+  )
+}
+
+
+let removeSearch = (element) =>{
+  $(element).empty()
+}
+let insertTeam = () =>{
+  data = {
+      country_name:$('#country')[0].value,
+      teams_name:$('#name_team')[0].value,
+      teams_url:"url",
+      team_description:$('#descrip')[0].value,
+      tournaments_id:$('#team_t')[0].value
+
+  }
+  let url = "http://localhost:3000/Teams/" 
+  fetch(url,{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+    body:JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(response=>{
+    console.log(response)
+    if(response.status == 200){
+      window.location.reload();
+    }else{
+      console("status"+response.status+", msg:"+response.message)
+    }
+
+  })  
+}
+let insertMatch = () =>{
+  data = {
+      country_name:$('#country')[0].value,
+      teams_name:$('#')[0].value,
+      teams_url:"url",
+      team_description:$('#descrip')[0].value,
+      tournaments_id:$('#team_t')[0].value
+
+  }
+  let url = "http://localhost:3000/Match/" 
+  fetch(url,{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+    body:JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(response=>{
+    console.log(response)
+    if(response.status == 200){
+      window.location.reload();
+    }else{
+      console("status"+response.status+", msg:"+response.message)
+    }
+
+  })  
+}
+let insertTor = () =>{
+  data = {
+      country_name:$('#country_tor')[0].value,
+      type_tourney:$('#type_tor')[0].value,
+      tourney_name:$('#name_tor')[0].value,
+      
+
+  }
+  let url = "http://localhost:3000/Tourney/" 
+  fetch(url,{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+    body:JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(response=>{
+    console.log(response)
+    if(response.status == 200){
+      window.location.reload();
+    }else{
+      console("status"+response.status+", msg:"+response.message)
+    }
+
+  })  
+}
+
+
+let searchTeams = () =>{
+  let url = ''
+  let search = $("#searchTeam")[0].value;
+
+  if(search.trim() == ''){
+    url = "http://localhost:3000/Teams"
+  }else{
+    url= "http://localhost:3000/Teams/" + search
+  }
+
+  fetch(url,{
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+  })
+  .then(res => res.json())
+  .then(response=>{
+    console.log(response)
+    if(response.status == 200){
+      removeSearch("#accordionTeam")
+      response.data.forEach(team => {
+        addTeam(team)
+      });
+    }
+
+  })
+  .catch(error=>{
+    console.log(error)
+  })
+}
+
+
+
+let searchMatches = () =>{
+  fetch("http://localhost:3000/Matchs/"+selectedTournament,{
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+  })
+  .then(res => res.json())
+  .then(res =>{
+    if(res.status === 200){
+      removeSearch("#matchesList")
+      res.data.forEach((match)=>{
+        addMatch(match);
+      })
+    }
+    console.log(res)
+  })
+}
+
+let annexTourney = (obj) =>{
+  $("#torneos").append(
+    `<option value="1" onclick="changeSearch('${obj.tournaments_name}',${obj.tournaments_id})">${obj.tournaments_name}</option>`
+  )
+  $('#team_t').append(
+    `<option value="${obj.tournaments_id}">${obj.tournaments_name}</option>`
+  )
+  $('#match_t').append(
+    `<option value="${obj.tournaments_id}">${obj.tournaments_name}</option>`
+  )
+}
+let annexCountry = (obj) =>{
+  $("#tor_c").append(
+    `<option value="${obj.country_id}">${obj.country_name}</option>`
+  )
+  $('#team_c').append(
+    `<option value="${obj.country_id}">${obj.country_name}</option>`
+  )
+}
+let annexTeams = (obj) =>{
+  $('#match_team1').append(
+    `<option value="${obj.teams_id}">${obj.teams_name}</option>`
+  )
+  $('#match_team2').append(
+    `<option value="${obj.teams_id}">${obj.teams_name}</option>`
+  )
+}
+$("#clearTeams").on("click", ()=>{
+  removeSearch("#accordionTeam")
+})
+
+$("#clearMatches").on("click", ()=>{
+  removeSearch("#matchesList")
+})
+
+fetch('http://localhost:3000/Tournaments',{
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  credentials: 'include',
+})
+.then(res => res.json())
+.then(res =>{
+  console.log('tourney',res)
+  if(res.status === 200){
+    res.data.forEach(tourney => {
+      annexTourney(tourney)
+      addTourney(tourney)
+    });
+  }
+})
+fetch('http://localhost:3000/Country',{
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  credentials: 'include',
+})
+.then(res => res.json())
+.then(res =>{
+  console.log('Country',res)
+  if(res.status === 200){
+    res.data.forEach(country => {
+      annexCountry(country)
+    });
+  }
+})
+fetch('http://localhost:3000/Teams',{
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+  })
+  .then(res => res.json())
+  .then(response=>{
+    console.log(response)
+    if(response.status == 200){
+      removeSearch("#accordionTeam")
+      response.data.forEach(team => {
+        addTeam(team)
+        annexTeams(team)
+
+      });
+    }})
         match = {
-            team1: "Real Madrid",
-            team2: "Barcelona",
+            teams:{local:{name: "Real Madrid"}, visitante:{name: "Barcelona"}},
+           
             date: "22/03/19"
         }
 
@@ -259,19 +576,16 @@
             status: 'Ambitioni dedisse scripsisse iudicaretur. Cras mattis iudicium purus sit amet fermentum. Donec sed odio operae, eu vulputate felis rhoncus. Praeterea iter est quasdam res quas ex communi. At nos hinc posthac, sitientis piros Afros. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Cras mattis iudicium purus sit amet fermentum.',
             country: 'españa'
         }
+addMatch(match)
+addTeam(team)
 
-        $("#clearTeams").on("click", () => {
-            removeSearch("#accordionTeam")
-        })
+$("#buttonTeam").on("click", ()=>{
+  searchTeams()
+});
 
-        $("#button-addon2").on("click", () => {
-            addTeam(team)
-            addMatch(match)
-        });
-        window.onload = () => {
-            addTeam(team)
-            addMatch(match)
-        }
+$("#button-addon2").on("click", ()=>{
+  searchMatches()
+});
     </script>
 </body>
 

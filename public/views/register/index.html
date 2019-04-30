@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Triplete | Registro</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../../css/bootstrap.css">
     <link rel="stylesheet" href="../../css/register.css">
     <style>
         @media (max-width: 560px) {
@@ -51,10 +51,10 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="/popper.js/dist/umd/popper.js"></script>
-    <script type="text/javascript" src="/jquery/dist/jquery.js"></script>
-    <script type="text/javascript" src="/bootstrap/dist/js/bootstrap.js"></script>
     <script type="text/javascript" src="../../components/navbar.js"></script>
+    <script type="text/javascript" src="../../js/popper.js"></script>
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
     <script>
         function $(id) {
             return document.getElementById(id);
@@ -114,7 +114,7 @@
                         .then(response => {
                             if (response.status === 201) {
                                 alert('success')
-                                window.location.href = '..'
+                                window.location.href = '../login'
                             } else {
                                 alert("Error " + response.status + ", try again.")
                             }
