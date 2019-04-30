@@ -45,7 +45,7 @@ exports.getMatch = (tournament_id) => {
 }
 
 exports.getAllCountrys = () => {
-  return handler(queries.getAllCountrys, db.many);
+  return handlerWithNoParams(queries.getAllCountrys, db.any);
 }
 exports.getTournaments = () => {
   return handlerWithNoParams(queries.getTournaments, db.many);
