@@ -1,0 +1,535 @@
+{
+	"info": {
+		"_postman_id": "76c2b16f-7e7b-4f6c-b247-447499457874",
+		"name": "Triplete",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Profile Data",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc19pZCI6MywidXNlcnNfcGhvbmUiOiI0MTI0NzI0NDAyIiwidXNlcnNfdXNlcm5hbWUiOiIxNGx1aXNtYiIsInVzZXJzX25hbWUiOiJjaW9uZGlvc21pbyIsInVzZXJzX2VtYWlsIjoiMTNsdWlzbWJAZ21haWwuY29tIiwidXNlcnNfcGFzc3dvcmQiOiIkMmEkMTAkN0ozYjFiRGpmejd5ZjdFVHlWanFadWdBWmkwNEF3YlpCVzE2Uzd4OGdWV0ZWZHBta1hzbVMiLCJ1c2VyX3BpY3R1cmVfdXJsIjoiLi92aWV3cy91cGxvYWRzLzMvMTU1NTM2NDk3MzI1Ni5qcGVnIiwidXNlcnNfY3JlYXRpb25fdGltZSI6IjIwMTktMDQtMTFUMDQ6MDA6MDAuMDAwWiIsImlhdCI6MTU1NjE0NzkyMX0.rTLBAhoIybQnfow6BRfxCpkChhOZhM61EuwWaKVEW9s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Team",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc19pZCI6MywidXNlcnNfcGhvbmUiOiI0MTI0NzI0NDAyIiwidXNlcnNfdXNlcm5hbWUiOiIxNGx1aXNtYiIsInVzZXJzX25hbWUiOiJjaW9uZGlvc21pbyIsInVzZXJzX2VtYWlsIjoiMTNsdWlzbWJAZ21haWwuY29tIiwidXNlcnNfcGFzc3dvcmQiOiIkMmEkMTAkN0ozYjFiRGpmejd5ZjdFVHlWanFadWdBWmkwNEF3YlpCVzE2Uzd4OGdWV0ZWZHBta1hzbVMiLCJ1c2VyX3BpY3R1cmVfdXJsIjoiLi92aWV3cy91cGxvYWRzLzMvMTU1NTM2NDk3MzI1Ni5qcGVnIiwidXNlcnNfY3JlYXRpb25fdGltZSI6IjIwMTktMDQtMTFUMDQ6MDA6MDAuMDAwWiIsImlhdCI6MTU1NjE0NzkyMX0.rTLBAhoIybQnfow6BRfxCpkChhOZhM61EuwWaKVEW9s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"team_country\": 34,\n\t\"team_name\": \"AEK Athens\", \n\t\"team_desc\": \"Es de grecia\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/Teams",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Teams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Team",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc19pZCI6MywidXNlcnNfcGhvbmUiOiI0MTI0NzI0NDAyIiwidXNlcnNfdXNlcm5hbWUiOiIxNGx1aXNtYiIsInVzZXJzX25hbWUiOiJjaW9uZGlvc21pbyIsInVzZXJzX2VtYWlsIjoiMTNsdWlzbWJAZ21haWwuY29tIiwidXNlcnNfcGFzc3dvcmQiOiIkMmEkMTAkN0ozYjFiRGpmejd5ZjdFVHlWanFadWdBWmkwNEF3YlpCVzE2Uzd4OGdWV0ZWZHBta1hzbVMiLCJ1c2VyX3BpY3R1cmVfdXJsIjoiLi92aWV3cy91cGxvYWRzLzMvMTU1NTM2NDk3MzI1Ni5qcGVnIiwidXNlcnNfY3JlYXRpb25fdGltZSI6IjIwMTktMDQtMTFUMDQ6MDA6MDAuMDAwWiIsImlhdCI6MTU1NjE0NzkyMX0.rTLBAhoIybQnfow6BRfxCpkChhOZhM61EuwWaKVEW9s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Malaga CF\",\n\t\"desc\": \"era de espanya\", \n\t\"country\":34, \n\t\"teamId\":33\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/Teams",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Teams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Team",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc19pZCI6MywidXNlcnNfcGhvbmUiOiI0MTI0NzI0NDAyIiwidXNlcnNfdXNlcm5hbWUiOiIxNGx1aXNtYiIsInVzZXJzX25hbWUiOiJjaW9uZGlvc21pbyIsInVzZXJzX2VtYWlsIjoiMTNsdWlzbWJAZ21haWwuY29tIiwidXNlcnNfcGFzc3dvcmQiOiIkMmEkMTAkN0ozYjFiRGpmejd5ZjdFVHlWanFadWdBWmkwNEF3YlpCVzE2Uzd4OGdWV0ZWZHBta1hzbVMiLCJ1c2VyX3BpY3R1cmVfdXJsIjoiLi92aWV3cy91cGxvYWRzLzMvMTU1NTM2NDk3MzI1Ni5qcGVnIiwidXNlcnNfY3JlYXRpb25fdGltZSI6IjIwMTktMDQtMTFUMDQ6MDA6MDAuMDAwWiIsImlhdCI6MTU1NjE0NzkyMX0.rTLBAhoIybQnfow6BRfxCpkChhOZhM61EuwWaKVEW9s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"teamId\":33\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/Teams",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Teams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Tournament",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc19pZCI6MywidXNlcnNfcGhvbmUiOiI0MTI0NzI0NDAyIiwidXNlcnNfdXNlcm5hbWUiOiIxNGx1aXNtYiIsInVzZXJzX25hbWUiOiJjaW9uZGlvc21pbyIsInVzZXJzX2VtYWlsIjoiMTNsdWlzbWJAZ21haWwuY29tIiwidXNlcnNfcGFzc3dvcmQiOiIkMmEkMTAkN0ozYjFiRGpmejd5ZjdFVHlWanFadWdBWmkwNEF3YlpCVzE2Uzd4OGdWV0ZWZHBta1hzbVMiLCJ1c2VyX3BpY3R1cmVfdXJsIjoiLi92aWV3cy91cGxvYWRzLzMvMTU1NTM2NDk3MzI1Ni5qcGVnIiwidXNlcnNfY3JlYXRpb25fdGltZSI6IjIwMTktMDQtMTFUMDQ6MDA6MDAuMDAwWiIsImlhdCI6MTU1NjE0NzkyMX0.rTLBAhoIybQnfow6BRfxCpkChhOZhM61EuwWaKVEW9s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\": 1, \n\t\"country\": 34, \n\t\"tournament_name\": \"La shempions\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/Tournaments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Tournaments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Tournament",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc19pZCI6MywidXNlcnNfcGhvbmUiOiI0MTI0NzI0NDAyIiwidXNlcnNfdXNlcm5hbWUiOiIxNGx1aXNtYiIsInVzZXJzX25hbWUiOiJjaW9uZGlvc21pbyIsInVzZXJzX2VtYWlsIjoiMTNsdWlzbWJAZ21haWwuY29tIiwidXNlcnNfcGFzc3dvcmQiOiIkMmEkMTAkN0ozYjFiRGpmejd5ZjdFVHlWanFadWdBWmkwNEF3YlpCVzE2Uzd4OGdWV0ZWZHBta1hzbVMiLCJ1c2VyX3BpY3R1cmVfdXJsIjoiLi92aWV3cy91cGxvYWRzLzMvMTU1NTM2NDk3MzI1Ni5qcGVnIiwidXNlcnNfY3JlYXRpb25fdGltZSI6IjIwMTktMDQtMTFUMDQ6MDA6MDAuMDAwWiIsImlhdCI6MTU1NjE0NzkyMX0.rTLBAhoIybQnfow6BRfxCpkChhOZhM61EuwWaKVEW9s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"tournament_id\": 3\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/Tournaments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Tournaments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Match",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc19pZCI6MywidXNlcnNfcGhvbmUiOiI0MTI0NzI0NDAyIiwidXNlcnNfdXNlcm5hbWUiOiIxNGx1aXNtYiIsInVzZXJzX25hbWUiOiJjaW9uZGlvc21pbyIsInVzZXJzX2VtYWlsIjoiMTNsdWlzbWJAZ21haWwuY29tIiwidXNlcnNfcGFzc3dvcmQiOiIkMmEkMTAkN0ozYjFiRGpmejd5ZjdFVHlWanFadWdBWmkwNEF3YlpCVzE2Uzd4OGdWV0ZWZHBta1hzbVMiLCJ1c2VyX3BpY3R1cmVfdXJsIjoiLi92aWV3cy91cGxvYWRzLzMvMTU1NTM2NDk3MzI1Ni5qcGVnIiwidXNlcnNfY3JlYXRpb25fdGltZSI6IjIwMTktMDQtMTFUMDQ6MDA6MDAuMDAwWiIsImlhdCI6MTU1NjE0NzkyMX0.rTLBAhoIybQnfow6BRfxCpkChhOZhM61EuwWaKVEW9s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"tournamentId\": 1,\n\t\"group_id\": 1, \n\t\"match_date\": \"2019-09-24 16:30:00\", \n\t\"team1\": 4, \n\t\"team2\": 3\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/Match",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Match"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Match",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc19pZCI6MywidXNlcnNfcGhvbmUiOiI0MTI0NzI0NDAyIiwidXNlcnNfdXNlcm5hbWUiOiIxNGx1aXNtYiIsInVzZXJzX25hbWUiOiJjaW9uZGlvc21pbyIsInVzZXJzX2VtYWlsIjoiMTNsdWlzbWJAZ21haWwuY29tIiwidXNlcnNfcGFzc3dvcmQiOiIkMmEkMTAkN0ozYjFiRGpmejd5ZjdFVHlWanFadWdBWmkwNEF3YlpCVzE2Uzd4OGdWV0ZWZHBta1hzbVMiLCJ1c2VyX3BpY3R1cmVfdXJsIjoiLi92aWV3cy91cGxvYWRzLzMvMTU1NTM2NDk3MzI1Ni5qcGVnIiwidXNlcnNfY3JlYXRpb25fdGltZSI6IjIwMTktMDQtMTFUMDQ6MDA6MDAuMDAwWiIsImlhdCI6MTU1NjE0NzkyMX0.rTLBAhoIybQnfow6BRfxCpkChhOZhM61EuwWaKVEW9s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"team1Score\": 1, \n\t\"team1Id\": 4,\n\t\"team2Score\": 2,\n\t\"team2Id\": 3,\n\t\"matchId\": 135,\n\t\"team1Name\":\"Borussia Dortmund\",\n\t\"team2Name\": \"Atletico de Madrid\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/Match",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Match"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Match",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc19pZCI6MywidXNlcnNfcGhvbmUiOiI0MTI0NzI0NDAyIiwidXNlcnNfdXNlcm5hbWUiOiIxNGx1aXNtYiIsInVzZXJzX25hbWUiOiJjaW9uZGlvc21pbyIsInVzZXJzX2VtYWlsIjoiMTNsdWlzbWJAZ21haWwuY29tIiwidXNlcnNfcGFzc3dvcmQiOiIkMmEkMTAkN0ozYjFiRGpmejd5ZjdFVHlWanFadWdBWmkwNEF3YlpCVzE2Uzd4OGdWV0ZWZHBta1hzbVMiLCJ1c2VyX3BpY3R1cmVfdXJsIjoiLi92aWV3cy91cGxvYWRzLzMvMTU1NTM2NDk3MzI1Ni5qcGVnIiwidXNlcnNfY3JlYXRpb25fdGltZSI6IjIwMTktMDQtMTFUMDQ6MDA6MDAuMDAwWiIsImlhdCI6MTU1NjE0NzkyMX0.rTLBAhoIybQnfow6BRfxCpkChhOZhM61EuwWaKVEW9s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"matchId\": 135\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/Match",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Match"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Bets by Range",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc19pZCI6MywidXNlcnNfcGhvbmUiOiI0MTI0NzI0NDAyIiwidXNlcnNfdXNlcm5hbWUiOiIxNGx1aXNtYiIsInVzZXJzX25hbWUiOiJjaW9uZGlvc21pbyIsInVzZXJzX2VtYWlsIjoiMTNsdWlzbWJAZ21haWwuY29tIiwidXNlcnNfcGFzc3dvcmQiOiIkMmEkMTAkN0ozYjFiRGpmejd5ZjdFVHlWanFadWdBWmkwNEF3YlpCVzE2Uzd4OGdWV0ZWZHBta1hzbVMiLCJ1c2VyX3BpY3R1cmVfdXJsIjoiLi92aWV3cy91cGxvYWRzLzMvMTU1NTM2NDk3MzI1Ni5qcGVnIiwidXNlcnNfY3JlYXRpb25fdGltZSI6IjIwMTktMDQtMTFUMDQ6MDA6MDAuMDAwWiIsImlhdCI6MTU1NjE0NzkyMX0.rTLBAhoIybQnfow6BRfxCpkChhOZhM61EuwWaKVEW9s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"date\": \"2019-04-29\",\n\t\"range\":\"range\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/bets",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"bets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Bets by Day",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc19pZCI6MywidXNlcnNfcGhvbmUiOiI0MTI0NzI0NDAyIiwidXNlcnNfdXNlcm5hbWUiOiIxNGx1aXNtYiIsInVzZXJzX25hbWUiOiJjaW9uZGlvc21pbyIsInVzZXJzX2VtYWlsIjoiMTNsdWlzbWJAZ21haWwuY29tIiwidXNlcnNfcGFzc3dvcmQiOiIkMmEkMTAkN0ozYjFiRGpmejd5ZjdFVHlWanFadWdBWmkwNEF3YlpCVzE2Uzd4OGdWV0ZWZHBta1hzbVMiLCJ1c2VyX3BpY3R1cmVfdXJsIjoiLi92aWV3cy91cGxvYWRzLzMvMTU1NTM2NDk3MzI1Ni5qcGVnIiwidXNlcnNfY3JlYXRpb25fdGltZSI6IjIwMTktMDQtMTFUMDQ6MDA6MDAuMDAwWiIsImlhdCI6MTU1NjE0NzkyMX0.rTLBAhoIybQnfow6BRfxCpkChhOZhM61EuwWaKVEW9s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"date\": \"2019-04-29\",\n\t\"range\":\"day\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/bets",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"bets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Bets",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc19pZCI6MywidXNlcnNfcGhvbmUiOiI0MTI0NzI0NDAyIiwidXNlcnNfdXNlcm5hbWUiOiIxNGx1aXNtYiIsInVzZXJzX25hbWUiOiJjaW9uZGlvc21pbyIsInVzZXJzX2VtYWlsIjoiMTNsdWlzbWJAZ21haWwuY29tIiwidXNlcnNfcGFzc3dvcmQiOiIkMmEkMTAkN0ozYjFiRGpmejd5ZjdFVHlWanFadWdBWmkwNEF3YlpCVzE2Uzd4OGdWV0ZWZHBta1hzbVMiLCJ1c2VyX3BpY3R1cmVfdXJsIjoiLi92aWV3cy91cGxvYWRzLzMvMTU1NTM2NDk3MzI1Ni5qcGVnIiwidXNlcnNfY3JlYXRpb25fdGltZSI6IjIwMTktMDQtMTFUMDQ6MDA6MDAuMDAwWiIsImlhdCI6MTU1NjE0NzkyMX0.rTLBAhoIybQnfow6BRfxCpkChhOZhM61EuwWaKVEW9s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/bet",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"bet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get 10 Bets (for startup)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc19pZCI6MywidXNlcnNfcGhvbmUiOiI0MTI0NzI0NDAyIiwidXNlcnNfdXNlcm5hbWUiOiIxNGx1aXNtYiIsInVzZXJzX25hbWUiOiJjaW9uZGlvc21pbyIsInVzZXJzX2VtYWlsIjoiMTNsdWlzbWJAZ21haWwuY29tIiwidXNlcnNfcGFzc3dvcmQiOiIkMmEkMTAkN0ozYjFiRGpmejd5ZjdFVHlWanFadWdBWmkwNEF3YlpCVzE2Uzd4OGdWV0ZWZHBta1hzbVMiLCJ1c2VyX3BpY3R1cmVfdXJsIjoiLi92aWV3cy91cGxvYWRzLzMvMTU1NTM2NDk3MzI1Ni5qcGVnIiwidXNlcnNfY3JlYXRpb25fdGltZSI6IjIwMTktMDQtMTFUMDQ6MDA6MDAuMDAwWiIsImlhdCI6MTU1NjE0NzkyMX0.rTLBAhoIybQnfow6BRfxCpkChhOZhM61EuwWaKVEW9s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/bet",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"bet"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

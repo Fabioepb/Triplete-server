@@ -23,11 +23,25 @@ const queries = {
    inner join triplete.matches mat on tr.tournaments_id = mat.tournaments_id
    inner join triplete.matches_teams matem on mat.match_id = matem.match_id where tr.tournaments_id= $1;`),
    putProfile: new preparedStatement('pu-profile', `update triplete.users set users_name = $1, users_email = $2, users_credit_card = $3, users_bank_account = $4 where users_id = $5`),
-   postBet: new preparedStatement('post-bet', `insert into triplete.bet_detail (match_id, users_id, bet_payment, bet_odd, team1_score, team2_score) values($1, $2, $3, $4, $5, $6) returning bet_id`),
+   getProfileUser: new preparedStatement('get-profile', 'SELECT * from triplete.users WHERE users_id = $1'),
+   getProfileBets: new preparedStatement('get-profile-bets', 'SELECT * FROM triplete.bet_detail WHERE users_id = $1 ORDER BY bet_creation_time DESC limit 10'),
+   postBet: new preparedStatement('post-bet', `insert into triplete.bet_detail (match_id, users_id, bet_payment, bet_odd, team1_score, team2_score, bet_creation_time) values($1, $2, $3, $4, $5, $6, $7) returning bet_id`),
    getBets: new preparedStatement('get-bet', `select * from triplete.bet_detail where users_id = $1`),
-   deleteBet: new preparedStatement('get-bet', 'delete from triplete.bet_detail where users_id = $1')
-   
-  
+   deleteBet: new preparedStatement('get-bet', 'delete from triplete.bet_detail where users_id = $1'),
+   createTournament: new preparedStatement('new-tournament', 'INSERT INTO triplete.tournaments (type_tournament_id, country_id, tournaments_name) VALUES ($1, $2, $3)'),
+   deleteTournament: new preparedStatement('dlt-tournament', 'DELETE FROM triplete.tournaments WHERE tournaments_id= $1'),
+   createTeam: new preparedStatement('new-team', 'insert into triplete.teams (country_id, teams_name, teams_url, team_description) VALUES ($1, $2, $3, $4)'),
+   updateTeam: new preparedStatement('updt-team', 'update triplete.teams SET teams_name = $1, teams_url = $2, teams_average = $3, team_description = $4, country_id = $5 WHERE teams_id = $6'),
+   deleteTeam: new preparedStatement('dlt-team','delete from triplete.teams where teams_id = $1'),
+   createMatch: new preparedStatement('new-match','insert into triplete.matches (tournaments_id, match_played, rounds_id, group_id, type_match_id, match_date) VALUES ($1, FALSE, 1, $2, 1, $3) returning match_id'),
+   updateMatch: new preparedStatement('updt-match','update triplete.matches set match_played = $1, match_winner = $2 where match_id = $3'),
+   deleteMatch: new preparedStatement('dlt-match', 'delete from triplete.matches where match_id = $1'),
+   createMatchParticipants: new preparedStatement('new-match-teams','insert into triplete.matches_teams (team_status_id, teams_id, match_id) Values ($1, $2, $3);'),
+   getMatchParticipants: new preparedStatement('get-match-teams', 'select * from triplete.matches_teams where match_id = $1'),
+   editMatchParticipants: new preparedStatement('edit-match-teams','update triplete.matches_teams set team_score = $1 where match_id = $2 AND teams_id = $3'),
+   getBetsInRange: new preparedStatement('bets-on-range','select * from triplete.bet_detail bt inner join triplete.users us on us.users_id = bt.users_id inner join triplete.matches mt on bt.match_id = mt.match_id WHERE bt.bet_creation_time >= $1'),
+   getBetsInDay: new preparedStatement('bets-on-day','select * from triplete.bet_detail bt inner join triplete.users us on us.users_id = bt.users_id inner join triplete.matches mt on bt.match_id = mt.match_id WHERE bt.bet_creation_time = $1'),
+   getAllBets: new preparedStatement('all-bets', 'select * from triplete.bet_detail bt inner join triplete.users us on us.users_id = bt.users_id inner join triplete.matches mt on bt.match_id = mt.match_id ORDER BY bt.bet_creation_time DESC limit 10')
 }
 
 module.exports = queries;

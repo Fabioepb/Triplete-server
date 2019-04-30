@@ -58,12 +58,76 @@ exports.updateUser = (userId, userName, userEmail, userCreditCard, userBankAccou
   return handler(queries.putProfile, [userName, userEmail, userCreditCard, userBankAccount, userId]);
 }
 
+exports.getUserData = (userId) => {
+  return handler(queries.getProfileUser,[userId], true, db.one);
+}
+
+exports.getProfileBets = (userId) => {
+  return handler(queries.getProfileBets,[userId], true, db.any);
+}
+
 exports.postBet = (matchId, userId, betPayment, betOdd, team1Score, team2Score) => {
   return handler(queries.postBet, [matchId, userId, betPayment, betOdd, team1Score, team2Score], true, db.one);
 }
 
 exports.getBets = (userId) => {
   return handler(queries.getBets, [userId], true, db.any);
+}
+
+exports.newTournament = (type, country, name) => {
+  return handler(queries.createTournament, [type,country,name], db.none);
+}
+
+exports.deleteTournament = (TournamentId) => {
+  return handler(queries.deleteTournament, [TournamentId], db.none);
+}
+
+exports.newTeam = (country, name, pic, desc) => {
+  return handler(queries.createTeam, [country, name, pic, desc], db.none);
+}
+
+exports.editTeam = (name, pic, avg, desc, country, teamId) => {
+  return handler(queries.updateTeam, [name, pic, avg, desc, country, teamId], db.none);
+}
+
+exports.deleteTeam = (teamId) => {
+  return handler (queries.deleteTeam, [teamId], db.none);
+}
+
+exports.createMatch = (tournamentId, group_id, match_date) => {
+  return handler(queries.createMatch, [tournamentId, group_id, match_date], true, db.one);
+}
+
+exports.updateMatch = (winner, matchId) => {
+  return handler(queries.updateMatch, [true, winner, matchId], db.none);
+}
+
+exports.deleteMatch = (matchId) => {
+  return handler(queries.deleteMatch, [matchId], db.none);
+}
+
+exports.createMatchParticipants = (status, teamId, matchId) =>{
+  return handler(queries.createMatchParticipants, [status, teamId, matchId], db.none);
+}
+
+exports.getMatchParticipants = (matchId) => {
+  return handler(queries.getMatchParticipants, [matchId], true, db.any);
+}
+
+exports.editParticipants = (score, matchId, teamId) => {
+  return handler(queries.editMatchParticipants, [score, matchId, teamId], db.none);
+}
+
+exports.getBetsByDay = (date) => {
+return handler(queries.getBetsInDay, [date], true, db.any);
+}
+
+exports.getBetsByRange = (date) => {
+  return handler(queries.getBetsInRange, [date], true, db.any);
+}
+
+exports.getAllBets = () => {
+  return handlerWithNoParams (queries.getAllBets, db.any);
 }
 
 //exports.deleteBet = (bet)
