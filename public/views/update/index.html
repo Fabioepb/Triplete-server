@@ -23,7 +23,7 @@
 </head>
 
 <body class="bg-dark">
-    <nav-bar inref="../login" upref="../register" pref="../profile" href="../" bref="../bet" iref="../information"></nav-bar>
+    <nav-bar inref="../login" upref="../register" pref="../admin" href="../" bref="../bet" iref="../repo"></nav-bar>
     <div class="container mt-5">
         <div class="row justify-content-center text-center">
             <div class="col-sm-4 col-md-6 contain" style="color:white;background-color:#212529;">
@@ -37,9 +37,6 @@
                   </select>
                   <label class="text-left my-2" for="descrip">Descripcion</label>
                 <input type="text" class="form-control" placeholder="Ej: Geometriaenel8vo" aria-label="descrip" id="descrip">
-                <label class="text-left my-2" for="tournent">Torneo en el que participa</label>
-                <select class="custom-select " id="team_t" aria-label="Example select with button addon">
-                </select>   
                 <br>
                 <br>
                 <div class="text-center">
@@ -60,11 +57,7 @@
         let id = new URL(window.location.href).searchParams.get("id");
     console.log(id)
 
-let annexTourney = (obj) =>{
-  $('#team_t').append(
-    `<option value="${obj.tournaments_id}">${obj.tournaments_name}</option>`
-  )
-}
+
 let annexCountry = (obj) =>{
 
   $('#team_c').append(
@@ -88,22 +81,7 @@ fetch('http://localhost:3000/Country',{
     });
   }
 })
-fetch('http://localhost:3000/Tournaments',{
-  method: 'GET',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  credentials: 'include',
-})
-.then(res => res.json())
-.then(res =>{
-  console.log('tourney',res)
-  if(res.status === 200){
-    res.data.forEach(tourney => {
-      annexTourney(tourney)
-    });
-  }
-})
+
 let getTeam = (id) =>{
 
     url= "http://localhost:3000/Team/" + id;

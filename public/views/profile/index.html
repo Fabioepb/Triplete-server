@@ -45,22 +45,16 @@
                     </p>
                 </div>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-12">
                         <h3>Racha</h3>
                     </div>
-                    <div class="col-6">
-                        <h3>Balance</h3>
-                    </div>
-                    <div class="col-2">
+                    <div class="col">
                         Actual <br>
-                        <span id="current" style="border-right:#689f38 1px solid;" class="ml-3 text-white pr-3">20</span>
+                        <span id="current" class="ml-3 text-white pr-3">20</span>
                     </div>
-                    <div class="col-4">
+                    <div class="col">
                         Mas alta <br>
                         <span id="highest" class="text-white pr-4 pl-4">20</span>
-                    </div>
-                    <div class="col-6 ">
-                        <span id="balance" class="h3 text-white pt-3 pb-3 pl-5 " style="border-left:#689f38 1px solid; ">300</span><span class="h3 text-success pr-5">$</span>
                     </div>
                 </div>
                 <div class="col-lg-12 pr-3 mt-2 ">
@@ -72,14 +66,10 @@
             <div class="mt-3 divisor ">
             </div>
 
-            <div class="col-lg-7 col-md-11 col-sm-11 text-center ml-4 mt-4 mr-3 profile-card ">
+            <div class="col-lg-7 col-md-11 col-sm-11 text-center ml-4 mt-4 mr-3 profile-card "style="overflow-y: auto;overflow-x: hidden">
                 <h4 class="d-inline pl-3 " style="color: #689f38 ">Historial de Apuestas</h4>
-                <ul id="bets" class="nav flex-column ">
-                    <!--                     <li class="nav-item m-2 " style="background-color: #689f38;border-radius: 15px ">
-                        <a class="nav-link " href="# ">item</a></li>
-                    <li class="nav-item m-2 " style="background-color: #689f38;border-radius: 15px ">
-                        <a class="nav-link " href="# ">item</a></li> -->
-                </ul>
+                <div id="bets">
+                </div>
             </div>
         </div>
     </div>
@@ -100,7 +90,6 @@
             let loss = $('loss');
             let current = $('current');
             let highest = $('highest');
-            let balance = $('balance');
 
     
 
@@ -131,13 +120,52 @@ console.log(data)
                         loss.innerHTML = response.data.lose;
                         current.innerHTML = response.data.streak;
                         highest.innerHTML = response.data.longest_streak;
-                        balance.innerHTML = response.data.balance;
+                        if(response.data.bets.length > 0){
                         response.data.bets.forEach(element => {
+                            let date = new Date(element.bet_creation_time)
+                            
+                            console.log(date)
+                            console.log(element.participants[0].teams_name)
                             $("bets").innerHTML += `
-                            <li class="nav-item m-2 " style="background-color: #689f38;border-radius: 15px ">
-                            <a class="nav-link " href="# ">${element.match}</a></li>
+                            <div class="mb-2 bt-2" style="background-color: #689f38;border-radius: 15px; color:#262626 ">
+                                <div class="row">
+                                <div class="col-12">
+                                    <h3>Apuesta</h3>
+                                </div>
+                                <div class="col">
+                                    Fecha <br>
+                                    <span class="text-white">${date.toDateString()}</span>
+                                </div>
+                                <div class="col">
+                                    Local <br>
+                                    <span class="text-white ">${element.participants[0].teams_name}</span>
+                                </div>
+                                <div class="col">
+                                    Visitante <br>
+                                    <span class="text-white ">${element.participants[1].teams_name}</span>
+                                </div>
+                                <div class="col">
+                                    Monto <br>
+                                    <span class="text-white ">${element.bet_payment}$</span>
+                                </div>
+                                <div class="col">
+                                    Local <br>
+                                    <span class="text-white ">${element.team1_score}</span>
+                                </div> 
+                                <div class="col">
+                                    Visitante <br>
+                                    <span class="text-white ">${element.team2_score}</span>
+                                </div>                                          
+                            </div>
+                        </div>
                             `
                         });
+
+                    }else{
+                        $("bets").innerHTML += `
+                        <h2 class="mt-5" style="border: 1px solid;padding: 25%;border-radius: 10px;">No haz hecho apuestas</h2>
+                            `
+                    }
                     } else {
                         alert(resonse.message + ", status(" + resonse.status + ")");
                     }
