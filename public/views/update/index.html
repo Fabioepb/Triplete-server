@@ -137,8 +137,9 @@ let modifTeam = (id) =>{
   data={
     name:$('#name')[0].value, 
     desc:$('#descrip')[0].value, 
-    country:$('#country')[0].value, 
+    country:$('#team_c')[0].value, 
   };
+  console.log(data)
   let url = "http://localhost:3000/Team/"+id 
   fetch(url,{
     method: 'PUT',
@@ -154,7 +155,7 @@ let modifTeam = (id) =>{
     if(response.status == 200){
       window.location.href = '../admin'
         }else{
-      console("status"+response.status+", msg:"+response.message)
+      console.log("status"+response.status+", msg:"+response.message)
     }
 
   })

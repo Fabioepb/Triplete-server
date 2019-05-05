@@ -39,7 +39,7 @@
                     <div class="input-group col-sm-8 mt-2">
                         <input type="text success" id="searchTeam" class="form-control" placeholder="Nombre de equipo" aria-label="Nombre de Equipo" aria-describedby="button-addon2">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-success btn-add-panel" type="button" id="button-addon2">Search</button>
+                            <button class="btn btn-outline-success btn-add-panel" type="button" id="buttonTeam">Search</button>
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -259,7 +259,7 @@ let deleteTourney = (id) =>{
     if(response.status == 200){
       window.location.reload();
     }else{
-      console("status"+response.status+", msg:"+response.message)
+      console.log("status"+response.status+", msg:"+response.message)
     }
 
   })
@@ -283,7 +283,7 @@ let deleteMatch = (id) =>{
     if(response.status == 200){
       window.location.reload();
     }else{
-      console("status"+response.status+", msg:"+response.message)
+      console.log("status"+response.status+", msg:"+response.message)
     }
 
   })
@@ -296,14 +296,15 @@ let deleteTeam = (id) =>{
   data={
     teamId:id
   }
-  let url = "http://localhost:3000/Teams/" 
+  console.log(data)
+  let url = "http://localhost:3000/Teams/?teamId="+id; 
   fetch(url,{
     method: 'DELETE',
-    headers: {
+    /*headers: {
       'Content-Type': 'application/json'
-    },
-    credentials: 'include',
-    body:JSON.stringify(data)
+    },*/
+    //credentials: 'include',
+   // body:JSON.stringify(data)
   })
   .then(res => res.json())
   .then(response=>{
@@ -311,7 +312,7 @@ let deleteTeam = (id) =>{
     if(response.status == 200){
       window.location.reload();
     }else{
-      console("status"+response.status+", msg:"+response.message)
+      console.log("status"+response.status+", msg:"+response.message)
     }
 
   })
@@ -338,13 +339,14 @@ let removeSearch = (element) =>{
 }
 let insertTeam = () =>{
   data = {
-      country_name:$('#country')[0].value,
-      teams_name:$('#name_team')[0].value,
+      team_country:$('#team_c')[0].value,
+      team_name:$('#name_team')[0].value,
       teams_url:"url",
       team_description:$('#descrip')[0].value,
       tournaments_id:$('#team_t')[0].value
 
   }
+  console.log(data)
   let url = "http://localhost:3000/Teams/" 
   fetch(url,{
     method: 'POST',
@@ -357,21 +359,21 @@ let insertTeam = () =>{
   .then(res => res.json())
   .then(response=>{
     console.log(response)
-    if(response.status == 200){
+    if(response.status == 201){
       window.location.reload();
     }else{
-      console("status"+response.status+", msg:"+response.message)
+      console.log("status"+response.status+", msg:"+response.message)
     }
 
   })  
 }
 let insertMatch = () =>{
   data = {
-      country_name:$('#country')[0].value,
-      teams_name:$('#')[0].value,
-      teams_url:"url",
-      team_description:$('#descrip')[0].value,
-      tournaments_id:$('#team_t')[0].value
+      group_id:1,
+      team1:$('#match_team1')[0].value,
+      team2:$('#match_team2')[0].value,
+      match_date:$('#match_date')[0].value,
+      tournamentId:$('#match_t')[0].value
 
   }
   let url = "http://localhost:3000/Match/" 
@@ -386,23 +388,23 @@ let insertMatch = () =>{
   .then(res => res.json())
   .then(response=>{
     console.log(response)
-    if(response.status == 200){
+    if(response.status == 201){
       window.location.reload();
     }else{
-      console("status"+response.status+", msg:"+response.message)
+      console.log("status"+response.status+", msg:"+response.message)
     }
 
   })  
 }
 let insertTor = () =>{
   data = {
-      country_name:$('#country_tor')[0].value,
-      type_tourney:$('#type_tor')[0].value,
-      tourney_name:$('#name_tor')[0].value,
+    country:$('#tor_c')[0].value,
+    type:$('#type_tor')[0].value,
+    tournament_name:$('#name_tor')[0].value,
       
 
   }
-  let url = "http://localhost:3000/Tourney/" 
+  let url = "http://localhost:3000/Tournaments/" 
   fetch(url,{
     method: 'POST',
     headers: {
@@ -414,10 +416,10 @@ let insertTor = () =>{
   .then(res => res.json())
   .then(response=>{
     console.log(response)
-    if(response.status == 200){
+    if(response.status == 201){
       window.location.reload();
     }else{
-      console("status"+response.status+", msg:"+response.message)
+      console.log("status"+response.status+", msg:"+response.message)
     }
 
   })  
@@ -443,7 +445,6 @@ let searchTeams = () =>{
   })
   .then(res => res.json())
   .then(response=>{
-    console.log(response)
     if(response.status == 200){
       removeSearch("#accordionTeam")
       response.data.forEach(team => {
@@ -565,19 +566,7 @@ fetch('http://localhost:3000/Teams',{
 
       });
     }})
-        match = {
-            teams:{local:{name: "Real Madrid"}, visitante:{name: "Barcelona"}},
-           
-            date: "22/03/19"
-        }
 
-        team = {
-            name: 'Barcelona F.C',
-            status: 'Ambitioni dedisse scripsisse iudicaretur. Cras mattis iudicium purus sit amet fermentum. Donec sed odio operae, eu vulputate felis rhoncus. Praeterea iter est quasdam res quas ex communi. At nos hinc posthac, sitientis piros Afros. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Cras mattis iudicium purus sit amet fermentum.',
-            country: 'españa'
-        }
-addMatch(match)
-addTeam(team)
 
 $("#buttonTeam").on("click", ()=>{
   searchTeams()
@@ -586,6 +575,7 @@ $("#buttonTeam").on("click", ()=>{
 $("#button-addon2").on("click", ()=>{
   searchMatches()
 });
+searchMatches();
     </script>
 </body>
 

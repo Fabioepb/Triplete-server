@@ -175,8 +175,9 @@ exports.createTeam = async (req, res, next) => {
 
 exports.updateTeam = async (req, res, next) => {
   const {name, desc, country} = req.body;
-  const teamId = req.params.id
+  const teamId = req.params.teams_id;
   console.log(req.body)
+  console.log(teamId);
   try{
     await dbApi.editTeam(name, null, Math.floor(Math.random() * 30), desc, country, teamId);
     res.status(200).json({status:200, message: 'team updated'});
@@ -186,10 +187,11 @@ exports.updateTeam = async (req, res, next) => {
 }
 
 exports.deleteTeam = async (req, res, next) => {
-  const {teamId} = req.body;
-  console.log(req.body.teamId)
+  const {teamId} = req.query;
+  console.log(req.query.teamId)
+
   try{
-    await dbApi.deleteMatch(teamId);
+    await dbApi.deleteTeam(teamId);
     res.status(200).json({status:200, message: 'team deleted'});
   }catch (e){
     badResponse (e, res);
