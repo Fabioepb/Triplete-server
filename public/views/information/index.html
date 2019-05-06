@@ -191,6 +191,7 @@ let bet = (matchId)=>{
 		
     }
     console.log(data)
+    if(data.betPayment !=0 && data.betPayment !='' && data.team1Score !='' && data.team2Score !=''){ 
 	let url = "http://localhost:3000/bet"//falta
 
         fetch(url,{
@@ -215,7 +216,7 @@ let bet = (matchId)=>{
         .catch(error=>{
           console.log(error)
         })
-
+}else{alert('Te faltan datos')}
 }
         let selectedTournament = 1;
 

@@ -238,20 +238,25 @@ let addMatch = (obj) => {
       $("#matchesList").append(
           `<a class="btn list-group-item list-group-item-action text-center d-inline w-90" '>${obj.teams.local.name} vs ${obj.teams.visitante.name} 
           </br>Fecha:${obj.match_date}</a>
-	<a class="btn btn-danger d-inline" onclick="deleteMatch(${obj.match_id})">Eliminar Partido</a>`
+	<a class="mb-2 btn btn-danger d-inline" onclick="deleteMatch(${obj.match_id})">Eliminar Partido</a>`
       )
   }
 
   let selectedTournament = 1;
 
 let deleteTourney = (id) =>{
-  let url = "http://localhost:3000/Tourny/"+id 
+  data ={
+    tournament_id:id
+  }
+  let url = "http://localhost:3000/Tournaments/"
   fetch(url,{
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'
     },
     credentials: 'include',
+    body:JSON.stringify(data)
+
   })
   .then(res => res.json())
   .then(response=>{
@@ -269,13 +274,17 @@ let deleteTourney = (id) =>{
 }
 
 let deleteMatch = (id) =>{
-  let url = "http://localhost:3000/Matchs/"+id 
+  data ={
+    matchId:id
+  }
+  let url = "http://localhost:3000/Match/" 
   fetch(url,{
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'
     },
     credentials: 'include',
+    body:JSON.stringify(data)
   })
   .then(res => res.json())
   .then(response=>{
@@ -329,7 +338,7 @@ document.getElementById('searchInput').value = text
 let addTourney = (obj) =>{
   $("#tourneyList").append(
     `<a href="../tourney?id=${obj.tournaments_id}" class="list-group-item list-group-item-action text-center">`+ obj.tournaments_name +'</a>'+
-	`<a class="btn btn-danger mb-2" onclick="deleteTorney(${obj.tournaments_id})">Eliminar Torneo</a>`
+	`<a class="btn btn-danger mb-2" onclick="deleteTourney(${obj.tournaments_id})">Eliminar Torneo</a>`
   )
 }
 

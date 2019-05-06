@@ -48,17 +48,22 @@
                     <input type="email" class="form-control" placeholder="Correo Electronico" aria-label="Email" id="email">
                     <div class="row">
 
-                        <div class="col-sm-8">
-                            <label for="email">Tarjeta</label>
-                            <input type="number" class="form-control" placeholder="5555-5555-4444-2255" aria-label="Email" id="card">
+                        <div class="col-sm-6">
+                            <label for="card">Tarjeta</label>
+                            <input type="text" onchange="bank()" class="form-control" placeholder="5555-5555-4444-2255" aria-label="Email" id="card">
                         </div>
-                        <div class="col-sm-4">
-                            <label for="email">codigo</label>
+                        <div class="col-sm-3">
+                            <label for="code">codigo</label>
                             <input type="number" class="form-control" placeholder="111" aria-label="Email" id="code">
                             
                         </div>
+                        <div class="col-sm-3">
+                            <label for="code">banco</label>
+                            <input type="text" class="form-control" placeholder="" aria-label="Email" id="bank" disabled>
+                            
+                        </div>                      
                     </div>
-                    <button type="submit" class="btn btn-dark btn-block shadow mt-5">Guardar</button>
+                    <button type="submit" onclick="update()" class="btn btn-dark btn-block shadow mt-5">Guardar</button>
                 </div>
             </div>
         </div>
@@ -71,32 +76,44 @@
                 function $(id) {
             return document.getElementById(id);
         }
+        let userData = JSON.parse(localStorage.getItem('session'));
 
         getData = () => ({
             name: $('name').value,
             lastname: $('lastname').value,
             email:$('email').value,
-            card:$('card').value,
-            code:$('code').value
+            creditCard:$('card').value,
+            code:$('code').value,
+            bankAccount:$('bank').value,  
         })
 
         validateInput = (data) => {
 
                 let code = data.code.trim()
-                let card = data.card.trim()
+                let card = data.creditCard.trim()
+                let name = data.name.trim()
+                let lastname = data.lastname.trim()
+                let email = data.email.trim()
+                let bankAccount = data.bankAccount.trim()
 
-                if (card != '') {
-                    if (code != '') {
-                        return true
-                        return false
-                    } else {
-                        return false
-                    }
-                }
+                if (card != '' && code !=''&& name !=''&& lastname !=''&& email !=''&& bankAccount !='' ) {
+                    return true;
+            }}            
+            let banks = $('bank')
+
+           bank = () => {
+
+            let card = $('card').value
+            console.log(card.startsWith(5))
+            if (card.startsWith(5)) {
+                banks.value = 'master card'
+            }if(card.startsWith(8)){
+                banks.value = 'visa'
+
             }
-                logIn = () => {
+            }
+            update = () => {
                     let data = getData();
-
                     if (validateInput(data)) {
                         fetch('http://localhost:3000/profile', {
                                 method: 'PUT',
@@ -112,12 +129,7 @@
                             .then(response => {
                                 console.log(response)
                                 if (response.status === 200) {
-                                    let userdata = {
-                                        username: response.username,
-                                        token: response.token,
-                                        id:response.id
-                                    }
-                                        localStorage.setItem('session', JSON.stringify(userdata))
+
                                         window.location.href = '../profile';
  
                                 } else {
@@ -127,7 +139,7 @@
                                 alert(error)
                             })
                     } else {
-                        alert('Login credentials incomplete')
+                        alert('update credentials incomplete')
                     }
 
                 }
