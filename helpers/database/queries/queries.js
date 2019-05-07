@@ -41,7 +41,7 @@ const queries = {
    updateMatch: new preparedStatement('updt-match','update triplete.matches set match_played = $1, match_winner = $2 where match_id = $3'),
    deleteMatch: new preparedStatement('dlt-match', 'delete from triplete.matches where match_id = $1'),
    createMatchParticipants: new preparedStatement('new-match-teams','insert into triplete.matches_teams (team_status_id, teams_id, match_id) Values ($1, $2, $3);'),
-   getMatchParticipants: new preparedStatement('get-match-teams', 'select * from triplete.matches_teams where match_id = $1'),
+   getMatchParticipants: new preparedStatement('get-match-teams', 'select * from triplete.matches_teams mt inner join triplete.teams tm on tm.teams_id=mt.teams_id  where mt.match_id  = $1'),
    editMatchParticipants: new preparedStatement('edit-match-teams','update triplete.matches_teams set team_score = $1 where match_id = $2 AND teams_id = $3'),
    getBetsInRange: new preparedStatement('bets-on-range','select * from triplete.bet_detail bt inner join triplete.users us on us.users_id = bt.users_id inner join triplete.matches mt on bt.match_id = mt.match_id WHERE bt.bet_creation_time >= $1'),
    getBetsInDay: new preparedStatement('bets-on-day','select * from triplete.bet_detail bt inner join triplete.users us on us.users_id = bt.users_id inner join triplete.matches mt on bt.match_id = mt.match_id WHERE bt.bet_creation_time = $1'),

@@ -60,7 +60,7 @@
                                                   <select class="custom-select " id="torneos" aria-label="Example select with button addon">
                                                   </select>
                                                   <div class="input-group-prepend">
-                                                          <button class="btn btn-outline-success btn-add-panel" type="button" id="button-addon2">Search</button>
+                                                          <button class="btn btn-outline-success btn-add-panel" type="button" id="button-addon2" style="border-top-right-radius: 5px;border-bottom-right-radius: 5px">Search</button>
                                                       </div>
                                                 </div>
                                         
@@ -150,17 +150,6 @@
                       
                             </div>
                         </div>
-                        <div class="text-center">
-                        <label style="color:#fff;display:block">Average:</label>
-                        <div class="row">
-                        <div class=" col text-left">
-                        <input class="form-control bet-input w-25 ml-5" type="number" id="average_team1" oninput="validity.valid||(value='');" min='0' placeholder="0" disabled>
-                        </div>
-                        <div class=" col text-right">
-                        <input value= "2" class="form-control bet-input w-25 mr-5" type="number" id="average_team2" oninput="validity.valid||(value='');" min='0' placeholder="0" disabled>
-                        </div>
-                        </div>
-                        </div>
 
                         <div class="text-center">
 
@@ -173,7 +162,7 @@
                         <input class="form-control bet-input w-15" type="number" id="betOdd" oninput="validity.valid||(value='');" min='0' placeholder="0" disabled>
                         </div>
                         <br>
-                        <button class="btn btn-outline-success mt-2 text-center" onclick="bet(${obj.match_id})" style="margin-left: 42%;">Apostar</button>
+                        <button class="btn btn-outline-success mt-2 text-center" data-dismiss="modal" onclick="bet(${obj.match_id})" style="margin-left: 42%;">Apostar</button>
                       </div>
                     </div>
                   </div>
@@ -202,6 +191,7 @@ let bet = (matchId)=>{
 		
     }
     console.log(data)
+    if(data.betPayment !=0 && data.betPayment !='' && data.team1Score !='' && data.team2Score !=''){ 
 	let url = "http://localhost:3000/bet"//falta
 
         fetch(url,{
@@ -216,9 +206,8 @@ let bet = (matchId)=>{
         .then(res => res.json())
         .then(response=>{
           console.log(response)
-          if(response.status == 200){
+          if(response.status == 201){
 		console.log(response)
-            
           }else{
 		console.log(response)
 	}
@@ -227,7 +216,7 @@ let bet = (matchId)=>{
         .catch(error=>{
           console.log(error)
         })
-
+}else{alert('Te faltan datos')}
 }
         let selectedTournament = 1;
 
@@ -363,7 +352,19 @@ let bet = (matchId)=>{
       $("#button-addon2").on("click", ()=>{
         searchMatches()
       });
+      searchMatches();
+$('.toast').toast({});
     </script> 
+<div class="toast" role="alert">
+    <div class="toast-header">
+      <strong>toast</strong>
+      <button class="ml-2 mb-2 close" data-dismiss="toast">x</button>
+
+    </div>
+    <div class="toast-body">
+      
+    </div>
+  </div>
 </body>
 
 </html>

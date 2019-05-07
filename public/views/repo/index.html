@@ -101,6 +101,7 @@ let removeSearch = (element) =>{
 }        
 let addRepo = (obj) => {
   let date = new Date(obj.bet_creation_time)
+  if(obj.match_winner !=null){
       $("#table-body").append(
           `<tr>
                         
@@ -112,6 +113,18 @@ let addRepo = (obj) => {
                         
                     </tr>`
       )
+  }else{
+    $("#table-body").append(
+          `<tr>
+                        
+                        <th scope="row">${obj.bet_id}</th>
+                        <td>${obj.users_username}</td>
+                        <td>${date.toDateString()}</td>
+                        <td>${obj.bet_payment}</td>
+                        <td>Aun no hay ganador</td>
+                        
+                    </tr>`)
+  }
   }
   fetch('http://localhost:3000/bet',{
     method: 'GET',
