@@ -3,13 +3,14 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const config = require('./helpers/config/config');
+const passport = require('./auth/passport');
+var root = require('./routes/root');
 
 var app = express();
 
 // view engine setup
+app.set('modules', path.join(__dirname, 'node_modules'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -19,13 +20,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use(root);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
+app.get('/', (req,res) => {
+	res.redirect('./views');
+})
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -38,8 +41,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(3000, () => {
-  console.log('Hola Mundo!');
+app.listen(config.port, () => {
+  console.log('Hola Mundo!', config.port);
 })
 
 module.exports = app;

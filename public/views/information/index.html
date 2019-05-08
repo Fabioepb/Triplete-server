@@ -1,0 +1,400 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Triplete | Informacion</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../css/bootstrap.css">
+    <link rel="stylesheet" href="../../css/informacion.css">
+    <style>
+
+    </style>
+    <script>
+    window.addEventListener("DOMContentLoaded",()=>{
+        console.log("bagre");
+        if (!localStorage.getItem("session")){
+          location.href = '..'
+        }
+      }
+    ) 
+    </script>
+</head>
+
+<body>
+  <nav-bar inref="../login" upref="../register" pref="../profile" href="../" bref="../bet" iref="../information"></nav-bar>
+  <div class="toast bg-dark text-white sticky-top hide" role="alert"style="left: 70%;top:40%;z-index: 2;">
+    <div class="toast-header" style="width: 100%;">
+      <strong class="mr-auto">Notificacion</strong>
+      <button class="ml-2 mb-2 close" data-dismiss="toast">x</button>
+    </div>
+    <div class="toast-body text-center">
+    </div>
+  </div>
+  <div class="container bg-dark mt-5" style="border-radius: 10px;z-index: 1;">
+      <nav class="mt-2">
+          <div class="nav nav-tabs mt-2" id="nav-tab" role="tablist">
+              <a class="nav-item nav-link active mt-2" id="nav-team-tab" data-toggle="tab" href="#nav-team" role="tab" aria-controls="nav-team" aria-selected="true" style="color:white">Equipos</a>
+              <a class="nav-item nav-link mt-2" id="nav-matches-tab" data-toggle="tab" href="#nav-matches" role="tab" aria-controls="nav-matches" aria-selected="false" style="color:white">Partidos</a>
+              <a class="nav-item nav-link mt-2" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false" style="color:white">Torneos</a>
+          </div>
+      </nav>
+
+      <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-team" role="tabpanel" aria-labelledby="nav-team-tab">
+
+              <div class="row mb-2" id="searchRow">
+                  <div class="input-group col-sm-8 mt-2">
+                      <input type="text success" id="searchTeam" class="form-control" placeholder="Nombre de equipo" aria-label="Nombre de Equipo" aria-describedby="buttonTeam">
+                      <div class="input-group-append">
+                          <button class="btn btn-outline-success btn-add-panel" type="button" id="buttonTeam">Search</button>
+                      </div>
+                  </div>
+                  <div class="col-sm-4">
+                      <button class="btn btn-outline-danger mt-2" id="clearTeams">Limpiar resultados</button>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="panel-group col" id="accordionTeam"></div>
+              </div>
+          </div>
+
+          <div class="tab-pane fade" id="nav-matches" role="tabpanel" aria-labelledby="nav-matches-tab">
+                  <div class="row mb-2" id="searchRow">
+                          <div class="input-group col-sm-8 mt-2">
+                                          <div class="input-group mb-3">
+
+                                                  <select class="custom-select " id="torneos" onclick="changeSearch(this.value)" aria-label="Example select with button addon">
+                                                  </select>
+                                                  <div class="input-group-prepend">
+                                                          <button class="btn btn-outline-success btn-add-panel" type="button" id="button-addon2" style="border-top-right-radius: 5px;border-bottom-right-radius: 5px">Search</button>
+                                                      </div>
+                                                </div>
+                                        
+                          </div>
+                          <div class="col-sm-4">
+                              <button class="btn btn-outline-danger mt-2" id="clearMatches">Limpiar resultados</button>
+                          </div>
+                      </div>
+              <div class="list-group mt-2 pb-2" id="matchesList">
+              </div>
+          </div>
+
+          <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+            <div class="list-group mt-2 pb-2" id="tourneyList"></div>
+          </div>
+      </div>
+
+  </div>
+    <script type="text/javascript" src="../../components/navbar.js"></script>
+    <script type="text/javascript" src="../../js/popper.js"></script>
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
+  <script>
+      var hash = 1;
+      let userData = JSON.parse(localStorage.getItem('session'));
+
+      $("#clearMatches").on("click", ()=>{
+        removeSearch("#matchesList")
+      })
+
+      let addTeam = (obj) =>{
+        $("#accordionTeam").append(
+          '<div class="panel panel-default mb-1 ml-3 col" style="margin-right: 2%">'+
+          '<div class="panel-heading" role="tab" id="heading_'+ ++hash +'">'+
+            '<h4 class="panel-title">'+
+              '<a role="button" data-toggle="collapse" data-parent="#accordionTeam" href="#collapse_'+ hash +'" aria-expanded="true" aria-controls="collapse_'+hash+'">'+
+                  obj.teams_name+
+              '</a>'+
+            '</h4>'+
+          '</div>'+
+          '<div id="collapse_'+hash+'" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading_'+hash+'">'+
+            '<div class="panel-body">'+
+              '<div class="row mb-2">'+
+                '<div class="col-sm-8 text-break bg-dark rounded" style="margin-left:10px">'+  
+                  "Descripcion: <br/> "+obj.team_description+
+                "</div>"+
+                '<div class="col-sm-3 bg-dark rounded" style="margin-left: 10px">'+  
+                  " Pais: <br/>" +obj.country_name+
+                  "<br/>"+
+                  "Promedio:</br>"+
+                  obj.teams_average+
+                "</div>"+
+              "</div>"+
+            '</div>'+
+          '</div>'+
+        '</div>'
+        )
+      }
+
+
+      let showModal = (obj,index) =>{
+        $('#'+index).on('click', ()=>{
+          console.log(obj)
+          console.log(index)
+          var x = `<div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" style="background-color:#212529;color:white;">
+                      <div class="modal-header">
+                        <h5 class="modal-title h4 text-center" id="myExtraLargeModalLabel">Apuesta</h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">x</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="text-center match" id='nombres'>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="row">
+                          <div class="col text-right" >
+                            <div id='nombrelocal' class='d-inline'></div>                            
+                            <input type="number" id="team1" class="form-control bet-input w-25" oninput="validity.valid||(value='');" min='0' placeholder="0" aria-label="Username" aria-describedby="basic-addon1">
+                          </div>
+                          <div class="divisor"></div>
+                          <div class="col text-left">
+                            <input type="number" min='0' id="team2" class="form-control bet-input w-25" oninput="validity.valid||(value='');"  placeholder="2" aria-label="Username" aria-describedby="basic-addon1">
+                            <div id='nombrevisitante' class='d-inline'></div>                            
+                      
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+
+                        <label style="color:#fff;display:block">Monto:</label>
+                        <input class="form-control bet-input w-15" type="number" id="betPayment" oninput="validity.valid||(value='');" min='0' placeholder="0">
+
+                        </div>
+                        <div class="text-center">
+                        <label style="color:#fff;display:block">Odd:</label>
+                        <input class="form-control bet-input w-15" type="number" id="betOdd" oninput="validity.valid||(value='');" min='0' placeholder="0" disabled>
+                        </div>
+                        <br>
+                        <button class="btn btn-outline-success mt-2 text-center" data-dismiss="modal" onclick="bet(${obj.match_id})" style="margin-left: 42%;">Apostar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>`
+            $('body').append(x)      
+            $('#nombres')[0].innerHTML = `<p style="padding-top: 7%;">${obj.teams.local.name} vs ${obj.teams.visitante.name}</p>`
+            $('#nombrelocal')[0].innerHTML = obj.teams.local.name
+            $('#nombrevisitante')[0].innerHTML = obj.teams.visitante.name
+            $('#betOdd')[0].value =((Math.random()+0.2)/Math.random())*10                     
+        
+          })
+      }
+      let addMatch = (obj,id) => {
+            $("#matchesList").append(
+                `<button type="button" id=${id} class="btn list-group-item list-group-item-action text-center" data-toggle="modal" data-target=".bd-example-modal-xl"'>${obj.teams.local.name} vs ${obj.teams.visitante.name} 
+                </br>Fecha:${obj.match_date}</button>`
+            )
+        }
+let bet = (matchId)=>{
+	data = {
+    matchId:matchId,
+    betPayment:$('#betPayment')[0].value,
+    betOdd:$('#betOdd')[0].value,
+    team1Score:$('#team1')[0].value,
+    team2Score:$('#team2')[0].value
+		
+    }
+    console.log(data)
+    if(data.betPayment !=0 && data.betPayment !='' && data.team1Score !='' && data.team2Score !=''){ 
+	let url = "http://localhost:3000/bet"//falta
+
+        fetch(url,{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userData.token}`
+          },
+          credentials: 'include',
+	        body:JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(response=>{
+          console.log(response)
+          if(response.status == 201){
+            $('.toast').toast('show')
+            removeSearch('.toast-body')
+            $('.toast-body').append(`${response.message}`)
+		console.log(response)
+          }else{
+		console.log(response)
+	}
+
+        })
+        .catch(error=>{
+          console.log(error)
+        })
+}else{               
+  removeSearch('.toast-body')
+  $('.toast').toast('show')
+  $('.toast-body').append(`Te falta datos`)
+      }
+}
+$('.toast').toast({delay:2000})
+
+        let selectedTournament;
+
+
+
+    let changeSearch = (id) =>{
+      selectedTournament = id
+    }
+
+      let addTourney = (obj) =>{
+        $("#tourneyList").append(
+          `<a href="../tourney?id=${obj.tournaments_id}" class="list-group-item list-group-item-action text-center">`+ obj.tournaments_name +'</a>'
+        )
+      }
+
+
+      let removeSearch = (element) =>{
+        $(element).empty()
+      }
+
+      let searchTeams = () =>{
+        let url = ''
+        let search = $("#searchTeam")[0].value;
+
+        if(search.trim() == ''){
+          url = "http://localhost:3000/Teams"
+        }else{
+          url= "http://localhost:3000/Teams/" + search
+        }
+
+        fetch(url,{
+          method: 'GET',
+          headers: {
+				    'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+        })
+        .then(res => res.json())
+        .then(response=>{
+          console.log(response)
+          if(response.status == 200){
+            removeSearch("#accordionTeam")
+            response.data.forEach(team => {
+              addTeam(team)
+            });
+          }
+
+        })
+        .catch(error=>{
+          console.log(error)
+        })
+      }
+
+
+
+    let searchMatches = () =>{
+        fetch("http://localhost:3000/Matchs/"+selectedTournament,{
+          method: 'GET',
+          headers: {
+				    'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+        })
+        .then(res => res.json())
+        .then(res =>{
+          if(res.status === 200){
+            removeSearch("#matchesList")
+            res.data.forEach((match,index)=>{
+              addMatch(match,index);
+              showModal(match,index)
+
+
+            })
+          }
+          console.log(res)
+        })
+      }
+      fetch("http://localhost:3000/Matchs/"+1,{
+          method: 'GET',
+          headers: {
+				    'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+        })
+        .then(res => res.json())
+        .then(res =>{
+          if(res.status === 200){
+            removeSearch("#matchesList")
+            res.data.forEach((match,index)=>{
+              addMatch(match,index);
+              showModal(match,index)
+
+
+            })
+          }
+          console.log(res)
+        })
+      
+
+      let annexTourney = (obj) =>{
+        $("#torneos").append(
+          `<option value="${obj.tournaments_id}" onclick="changeSearch(${obj.tournaments_id})">${obj.tournaments_name}</option>`
+        )
+      }
+
+      $("#clearTeams").on("click", ()=>{
+        removeSearch("#accordionTeam")
+      })
+
+      $("#clearMatches").on("click", ()=>{
+        removeSearch("#matchesList")
+      })
+
+      fetch('http://localhost:3000/Tournaments',{
+        method: 'GET',
+        headers: {
+				  'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+      })
+      .then(res => res.json())
+      .then(res =>{
+        console.log('tourney',res)
+        if(res.status === 200){
+          res.data.forEach(tourney => {
+            annexTourney(tourney)
+            addTourney(tourney)
+          });
+        }
+      })
+
+      fetch('http://localhost:3000/Teams',{
+          method: 'GET',
+          headers: {
+				    'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+        })
+        .then(res => res.json())
+        .then(response=>{
+          console.log(response)
+          if(response.status == 200){
+            removeSearch("#accordionTeam")
+            response.data.forEach(team => {
+              addTeam(team)
+            });
+          }})
+
+
+      $("#buttonTeam").on("click", ()=>{
+        searchTeams()
+      });
+
+      $("#button-addon2").on("click", ()=>{
+        selectedTournament = $('#torneos').val()
+        searchMatches()
+      });
+$('.toast').toast({});
+    </script> 
+
+</body>
+
+</html>
