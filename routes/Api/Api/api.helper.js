@@ -154,13 +154,17 @@ exports.createMatch = async (req, res, next) => {
 
 exports.updateMatch = async (req, res, next) => {
   const {team1Score, team1Id, team2Score, team2Id, matchId, team1Name, team2Name} = req.body;
+  console.log(req.body)
   try{
-    let winner;
+    let winner ='';
+    console.log(winner)
     if (team1Score === team2Score){
       winner = 'Empate';
     }else if (team1Score !== team2Score){
       winner = (team1Score > team2Score ? team1Name : team2Name);
     }
+      console.log(winner)
+
     await dbApi.editParticipants(team1Score, matchId, team1Id);
     await dbApi.editParticipants(team2Score, matchId, team2Id);
     await dbApi.updateMatch(winner, matchId);

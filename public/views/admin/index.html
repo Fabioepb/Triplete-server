@@ -245,7 +245,7 @@ let addTeam = (obj) =>{
 
 let addMatch = (obj) => {
       $("#matchesList").append(
-          `<a class="btn list-group-item list-group-item-action text-center d-inline w-90" '>${obj.teams.local.name} vs ${obj.teams.visitante.name} 
+          `<a href="../updateMatch?id=${obj.match_id}" class="btn list-group-item list-group-item-action text-center d-inline w-90" '>${obj.teams.local.name} vs ${obj.teams.visitante.name} 
           </br>Fecha:${obj.match_date}</a>
 	<a class="mb-2 btn btn-danger d-inline" onclick="deleteMatch(${obj.match_id})">Eliminar Partido</a>`
       )
