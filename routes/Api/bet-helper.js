@@ -22,9 +22,9 @@ exports.getBets = async (req, res) => {
     let data;
     if (range === 'day'){
       var today = new Date(date);
-      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      var datey = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
       var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      var dateTime = date+' '+time;
+      var dateTime = datey+' '+time;
       var date2 = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()+1);
       var dateTime2 = date2+' '+time;
       data = await dbApi.getBetsByDay(dateTime, dateTime2);
