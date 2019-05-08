@@ -135,5 +135,16 @@ exports.getAllBets = () => {
   return handlerWithNoParams (queries.getAllBets, db.any);
 }
 
+exports.getMatchesByTeam = (teamId) => {
+  return handler(queries.getMatchesByTeamId, [teamId], true, db.any);
+}
+
+exports.deleteRemanents = (matchId) => {
+  return handler(queries.deleteRemanentInMatches, [matchId], db.none);
+}
+
+exports.getMatchById = (matchId) => {
+  return handler (queries.getMatchById, [matchId], true, db.one);
+}
 //exports.deleteBet = (bet)
 

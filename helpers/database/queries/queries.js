@@ -13,7 +13,9 @@ const queries = {
   'select mat.match_id, match_played, match_winner, match_date, te.teams_name, ts.status_description, matem.team_score from triplete.matches mat right join triplete.matches_teams matem on mat.match_id = matem.match_id left join triplete.team_status ts on matem.team_status_id = ts.team_status_id left join triplete.teams te on matem.teams_id = te.teams_id where mat.tournaments_id = $1 order by  mat.match_played asc, mat.match_id desc;'),
   getTournaments: new preparedStatement('get-tournaments', 'select tournaments_id, country_name, tournaments_name from triplete.tournaments tor inner join triplete.country co on tor.country_id = co.country_id;'),
   getAllCountrys: new preparedStatement('get-all-countrys', 'select * from triplete.country'),
-
+  getMatchById: new preparedStatement('get-match-by-id', 'SELECT * from triplete.matches WHERE match_id = $1'),
+  getMatchesByTeamId: new preparedStatement('get-matches-by-teamid', 'SELECT match_id from triplete.matches_teams WHERE teams_id = $1'),
+  deleteRemanentInMatches: new preparedStatement('delete-remanent', 'DELETE FROM triplete.matches_teams WHERE match_id = $1'),
   tournamentRanking: new preparedStatement('tournament-ranking',
    'select teams_name, games, goals, draw, lost, points, last, win from triplete.tournament_ranking tr inner join triplete.teams te on tr.teams_id = te.teams_id where tr.tournament_id = $1 order by points desc;'),
    tournamentInfo: new preparedStatement('tournament-info', 

@@ -35,6 +35,19 @@ exports.getTeamsById = async (req, res, next) => {
     badResponse(error, res);
   }
 }
+
+
+exports.getMatchById = async (req, res, next) => {
+	const {matchId} = req.params;
+	try{
+		const data = await dbApi.getMatchById(matchId);
+		data.teams = await dbApi.getMatchParticipants(data.match_id);
+		res.status(200).json({status:200, message:'your match', data});
+	}catch (e){
+		badResponse(e, res);
+	}
+}
+
 exports.getMatch = async (req, res, next) => {
   try {
     const { tournament_id } = req.params;
@@ -42,7 +55,11 @@ exports.getMatch = async (req, res, next) => {
     let data = [];
     for (let i = 0; i < _data.length; i += 2) {
       let match = _data[i];
+      console.log('match 1: ',match);
+     if (match === undefined) continue;
       let match2 = _data[i+1];
+      console.log('match 2: ', match2);
+      if (match2 === undefined) continue;
       let {match_played, match_winner, match_date, match_id} = match;
       match_date = format(match_date, 'MM/DD/YYYY');
       let teams = {
@@ -191,7 +208,11 @@ exports.deleteTeam = async (req, res, next) => {
   console.log(req.query.teamId)
 
   try{
+  	const data = await dbApi.getMatchesByTeam(teamId);
+  	console.log(data);
     await dbApi.deleteTeam(teamId);
+    for (let a of data) await dbApi.deleteRemanents(a.match_id);
+    console.log('this happened');
     res.status(200).json({status:200, message: 'team deleted'});
   }catch (e){
     badResponse (e, res);
