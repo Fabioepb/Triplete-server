@@ -46,7 +46,7 @@ const queries = {
    getMatchParticipants: new preparedStatement('get-match-teams', 'select * from triplete.matches_teams mt inner join triplete.teams tm on tm.teams_id=mt.teams_id  where mt.match_id  = $1'),
    editMatchParticipants: new preparedStatement('edit-match-teams','update triplete.matches_teams set team_score = $1 where match_id = $2 AND teams_id = $3'),
    getBetsInRange: new preparedStatement('bets-on-range','select * from triplete.bet_detail bt inner join triplete.users us on us.users_id = bt.users_id inner join triplete.matches mt on bt.match_id = mt.match_id WHERE bt.bet_creation_time >= $1'),
-   getBetsInDay: new preparedStatement('bets-on-day','select * from triplete.bet_detail bt inner join triplete.users us on us.users_id = bt.users_id inner join triplete.matches mt on bt.match_id = mt.match_id WHERE bt.bet_creation_time >= $1 AND bt.bet_creation_time <= $2'),
+   getBetsInDay: new preparedStatement('bets-on-day','select * from triplete.bet_detail bt inner join triplete.users us on us.users_id = bt.users_id inner join triplete.matches mt on bt.match_id = mt.match_id WHERE bt.bet_creation_time >= $1 AND bt.bet_creation_time < $2'),
    getAllBets: new preparedStatement('all-bets', 'select * from triplete.bet_detail bt inner join triplete.users us on us.users_id = bt.users_id inner join triplete.matches mt on bt.match_id = mt.match_id ORDER BY bt.bet_creation_time DESC limit 10')
 }
 
