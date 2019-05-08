@@ -102,7 +102,7 @@
                             <div class="input-group col-sm-8 mt-2">
                                             <div class="input-group mb-3">
 
-                                                    <select class="custom-select " id="torneos" aria-label="Example select with button addon" onchange="changeSearch(this.value)">
+                                                    <select class="custom-select " id="torneos" aria-label="Example select with button addon" onclick="changeSearch(this.value)">
 
                                                     </select>
                                                     <div class="input-group-prepend">
@@ -251,7 +251,6 @@ let addMatch = (obj) => {
       )
   }
 
-  let selectedTournament = 1;
 
 let deleteTourney = (id) =>{
   data ={
@@ -530,7 +529,7 @@ let searchTeams = () =>{
   })
 }
 
-
+let selectedTournament;
 
 let searchMatches = () =>{
   fetch("http://localhost:3000/Matchs/"+selectedTournament,{
@@ -551,7 +550,23 @@ let searchMatches = () =>{
     console.log(res)
   })
 }
-
+fetch("http://localhost:3000/Matchs/"+1,{
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+  })
+  .then(res => res.json())
+  .then(res =>{
+    if(res.status === 200){
+      removeSearch("#matchesList")
+      res.data.forEach((match)=>{
+        addMatch(match);
+      })
+    }
+    console.log(res)
+  })
 let annexTourney = (obj) =>{
   $("#torneos").append(
     `<option value="${obj.tournaments_id}" onclick="changeSearch(${obj.tournaments_id})">${obj.tournaments_name}</option>`
@@ -645,9 +660,10 @@ $("#buttonTeam").on("click", ()=>{
 });
 
 $("#button-addon2").on("click", ()=>{
+  selectedTournament = $('#torneos').val()
   searchMatches()
 });
-searchMatches();
+
     </script>
 </body>
 

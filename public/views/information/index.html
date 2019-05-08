@@ -65,7 +65,7 @@
                           <div class="input-group col-sm-8 mt-2">
                                           <div class="input-group mb-3">
 
-                                                  <select class="custom-select " id="torneos" aria-label="Example select with button addon">
+                                                  <select class="custom-select " id="torneos" onclick="changeSearch(this.value)" aria-label="Example select with button addon">
                                                   </select>
                                                   <div class="input-group-prepend">
                                                           <button class="btn btn-outline-success btn-add-panel" type="button" id="button-addon2" style="border-top-right-radius: 5px;border-bottom-right-radius: 5px">Search</button>
@@ -236,13 +236,12 @@ let bet = (matchId)=>{
 }
 $('.toast').toast({delay:2000})
 
-        let selectedTournament = 1;
+        let selectedTournament;
 
 
 
-    let changeSearch = (text,id) =>{
+    let changeSearch = (id) =>{
       selectedTournament = id
-      document.getElementById('searchInput').value = text
     }
 
       let addTourney = (obj) =>{
@@ -313,11 +312,31 @@ $('.toast').toast({delay:2000})
           console.log(res)
         })
       }
+      fetch("http://localhost:3000/Matchs/"+1,{
+          method: 'GET',
+          headers: {
+				    'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+        })
+        .then(res => res.json())
+        .then(res =>{
+          if(res.status === 200){
+            removeSearch("#matchesList")
+            res.data.forEach((match,index)=>{
+              addMatch(match,index);
+              showModal(match,index)
 
+
+            })
+          }
+          console.log(res)
+        })
+      
 
       let annexTourney = (obj) =>{
         $("#torneos").append(
-          `<option value="1" onclick="changeSearch('${obj.tournaments_name}',${obj.tournaments_id})">${obj.tournaments_name}</option>`
+          `<option value="${obj.tournaments_id}" onclick="changeSearch(${obj.tournaments_id})">${obj.tournaments_name}</option>`
         )
       }
 
@@ -370,9 +389,9 @@ $('.toast').toast({delay:2000})
       });
 
       $("#button-addon2").on("click", ()=>{
+        selectedTournament = $('#torneos').val()
         searchMatches()
       });
-      searchMatches();
 $('.toast').toast({});
     </script> 
 
