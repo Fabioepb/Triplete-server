@@ -23,7 +23,15 @@
 
 <body>
   <nav-bar inref="../login" upref="../register" pref="../profile" href="../" bref="../bet" iref="../information"></nav-bar>
-  <div class="container bg-dark mt-5" style="border-radius: 10px">
+  <div class="toast bg-dark text-white sticky-top hide" role="alert"style="left: 70%;top:40%;z-index: 2;">
+    <div class="toast-header" style="width: 100%;">
+      <strong class="mr-auto">Notificacion</strong>
+      <button class="ml-2 mb-2 close" data-dismiss="toast">x</button>
+    </div>
+    <div class="toast-body text-center">
+    </div>
+  </div>
+  <div class="container bg-dark mt-5" style="border-radius: 10px;z-index: 1;">
       <nav class="mt-2">
           <div class="nav nav-tabs mt-2" id="nav-tab" role="tablist">
               <a class="nav-item nav-link active mt-2" id="nav-team-tab" data-toggle="tab" href="#nav-team" role="tab" aria-controls="nav-team" aria-selected="true" style="color:white">Equipos</a>
@@ -77,6 +85,7 @@
             <div class="list-group mt-2 pb-2" id="tourneyList"></div>
           </div>
       </div>
+
   </div>
     <script type="text/javascript" src="../../components/navbar.js"></script>
     <script type="text/javascript" src="../../js/popper.js"></script>
@@ -207,6 +216,9 @@ let bet = (matchId)=>{
         .then(response=>{
           console.log(response)
           if(response.status == 201){
+            $('.toast').toast('show')
+            removeSearch('.toast-body')
+            $('.toast-body').append(`${response.message}`)
 		console.log(response)
           }else{
 		console.log(response)
@@ -216,8 +228,14 @@ let bet = (matchId)=>{
         .catch(error=>{
           console.log(error)
         })
-}else{alert('Te faltan datos')}
+}else{               
+  removeSearch('.toast-body')
+  $('.toast').toast('show')
+  $('.toast-body').append(`Te falta datos`)
+      }
 }
+$('.toast').toast({delay:2000})
+
         let selectedTournament = 1;
 
 
@@ -288,6 +306,8 @@ let bet = (matchId)=>{
             res.data.forEach((match,index)=>{
               addMatch(match,index);
               showModal(match,index)
+
+
             })
           }
           console.log(res)
@@ -355,16 +375,7 @@ let bet = (matchId)=>{
       searchMatches();
 $('.toast').toast({});
     </script> 
-<div class="toast" role="alert">
-    <div class="toast-header">
-      <strong>toast</strong>
-      <button class="ml-2 mb-2 close" data-dismiss="toast">x</button>
 
-    </div>
-    <div class="toast-body">
-      
-    </div>
-  </div>
 </body>
 
 </html>

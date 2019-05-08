@@ -26,7 +26,8 @@
 
 <body class="bg-dark">
     <nav-bar inref="../login" upref="../register" pref="../profile" href="../" bref="../bet"></nav-bar>
-    <div class="container mt-5">
+    <div class="container mt-5" style="z-index: 1;">
+        
         <div class="row justify-content-center text-center">
             <div class="col-sm-8 col-md-6 contain">
                 <h2 class="display-1 font-weight-bold pt-3 pb-3">Inicia sesion.</h2>
@@ -45,20 +46,30 @@
                 <h4 class="helptext">Eres nuevo aqui? haz click <a href="../register/">aqui!</a></h4>
             </div>
         </div>
+        <div class="toast bg-dark text-white" role="alert"style="position: absolute;;left: 70%;top:40%;z-index: 2;width: 40%;">
+                <div class="toast-header" >
+                  <strong class="mr-auto">Notificacion</strong>
+                  <button class="ml-2 mb-2 close" data-dismiss="toast">x</button>
+                </div>
+                <div class="toast-body text-center">
+                </div>
+              </div>
     </div>
+
     <script type="text/javascript" src="../../components/navbar.js"></script>
     <script type="text/javascript" src="../../js/popper.js"></script>
     <script type="text/javascript" src="../../js/jquery.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.js"></script>
     <script>
-        function $(id) {
+        /*function $(id) {
             return document.getElementById(id);
-        }
+        }*/
 
         getData = () => ({
-            username: $('username').value,
-            password: $('password').value,
+            username: $('#username').val(),
+            password: $('#password').val(),
         })
+        $('.toast').toast({delay:10000})
 
         validateInput = (data) => {
 
@@ -104,13 +115,19 @@
 
                                     }
                                 } else {
-                                    alert('Error ' + response.status + ' ' + response.message)
+                                    $('.toast').toast('show')
+                                    $('.toast-body').empty()
+                                    $('.toast-body').append('Error ' + response.status + ' ' + response.message)
+                                    //alert('Error ' + response.status + ' ' + response.message)
                                 }
                             }).catch(error => {
                                 alert(error)
                             })
                     } else {
-                        alert('Login credentials incomplete')
+                        $('.toast').toast('show')
+                        $('.toast-body').empty()
+                        $('.toast-body').append('Login credentials incomplete')                        
+                        //alert('Login credentials incomplete')
                     }
 
                 }

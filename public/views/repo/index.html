@@ -23,6 +23,14 @@
 
 <body>
     <nav-bar inref="../login" upref="../register" pref="../admin" iref="../repo" href="../" bref="../bet"></nav-bar>
+    <div class="toast bg-dark text-white" role="alert"style="position: absolute;;left: 70%;top:40%;z-index: 2;width: 40%;">
+        <div class="toast-header" >
+          <strong class="mr-auto">Notificacion</strong>
+          <button class="ml-2 mb-2 close" data-dismiss="toast">x</button>
+        </div>
+        <div class="toast-body text-center">
+        </div>
+      </div>
     <div class="container bg-dark mt-5" style="border-radius: 10px">
         <div class="text-center text-white">
         <h2>Reportes</h2>
@@ -67,8 +75,9 @@
 let searchTeams = (range) =>{
   let url = ''
   let date=$("#dateRep")[0].value;
-
-      
+  $('.toast').toast({delay:5000})
+console.log(date)
+ if(range !='' && date !=''){    
     url = "http://localhost:3000/bets/"+range+"/"+date
   
 
@@ -95,6 +104,11 @@ let searchTeams = (range) =>{
   .catch(error=>{
     console.log(error)
   })
+}else{
+  $('.toast').toast('show')
+  $('.toast-body').empty()
+  $('.toast-body').append('Faltan datos, intente de nuevo')
+}
 }
 let removeSearch = (element) =>{
   $(element).empty()

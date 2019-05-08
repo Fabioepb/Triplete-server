@@ -35,7 +35,7 @@
         <div class="row">
             <div class=" col-lg-4 col-md-11 col-sm-11  text-center m-4 profile-card">
                 <div class=" p-4 divisor-card">
-                    <h3 id="name" style="color: white;text-align: initial">Invitado <span class="h6" style="color: #919191" id="username">@invitado1997</span></h3>
+                    <h3 id="name" style="color: white;text-align: initial"></h3>
                 </div>
                 <div class="divisor-card">
                     <h3>Apuestas</h3>
@@ -84,7 +84,7 @@
         let userData = JSON.parse(localStorage.getItem('session'));
         window.onload = () => {
             let name = $('name');
-            let username = $('username');
+            //let username = $('userName');
             let play = $('play');
             let win = $('win');
             let loss = $('loss');
@@ -93,10 +93,8 @@
 
     
 
-            let data = {
-                id:  userData.token
-            }
-console.log(data)
+
+console.log(userData)
             params = {
                 method: "GET",
                 headers: new Headers({
@@ -112,8 +110,8 @@ console.log(data)
                     console.log(response);
                     if (response.status == 200) { //por los momentos solo se van a mostrar
                         let user= response.data.user
-                        name.innerHTML = user.users_name;
-                        username.innerHTML = user.users_username;
+                        name.innerHTML += user.users_name;
+                        name.innerHTML += `<span class="h6" style="color: #919191">@${user.users_username}</span>`;
                         //se deberia de cambiar por un fetch pero por los momentos vamos a suponer que todo eso esta en el localStorege
                         play.innerHTML = response.data.played;
                         win.innerHTML = response.data.won;

@@ -32,6 +32,14 @@
 
 <body class="bg-dark">
     <nav-bar inref="../login" upref="../register" pref="../profile" href="../" iref='../information'></nav-bar>
+    <div class="toast bg-dark text-white" role="alert"style="position: absolute;;left: 70%;top:40%;z-index: 2;width: 40%;">
+            <div class="toast-header" >
+              <strong class="mr-auto">Notificacion</strong>
+              <button class="ml-2 mb-2 close" data-dismiss="toast">x</button>
+            </div>
+            <div class="toast-body text-center">
+            </div>
+          </div>   
     <div class="container mt-5">
         <div class="row justify-content-center ">
             <div class="col-sm-4 col-md-6 pb-4 form contain">
@@ -73,18 +81,18 @@
     <script type="text/javascript" src="../../js/jquery.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.js"></script>
     <script>
-                function $(id) {
+              /*  function $(id) {
             return document.getElementById(id);
-        }
+        }*/
         let userData = JSON.parse(localStorage.getItem('session'));
 
         getData = () => ({
-            name: $('name').value,
-            lastname: $('lastname').value,
-            email:$('email').value,
-            creditCard:$('card').value,
-            code:$('code').value,
-            bankAccount:$('bank').value,  
+            name: $('#name').val(),
+            lastname: $('#lastname').val(),
+            email:$('#email').val(),
+            creditCard:$('#card').val(),
+            code:$('#code').val(),
+            bankAccount:$('#bank').val(),  
         })
 
         validateInput = (data) => {
@@ -99,16 +107,17 @@
                 if (card != '' && code !=''&& name !=''&& lastname !=''&& email !=''&& bankAccount !='' ) {
                     return true;
             }}            
-            let banks = $('bank')
+            let banks = $('#bank')
+            $('.toast').toast({delay:10000})
 
            bank = () => {
 
-            let card = $('card').value
+            let card = $('#card').val()
             console.log(card.startsWith(5))
             if (card.startsWith(5)) {
-                banks.value = 'master card'
+                $('#bank').val('master card')
             }if(card.startsWith(8)){
-                banks.value = 'visa'
+                $('#bank').val('visa')
 
             }
             }
@@ -129,17 +138,25 @@
                             .then(response => {
                                 console.log(response)
                                 if (response.status === 200) {
-
+                                    $('.toast').toast('show')
+                                    $('.toast-body').empty()
+                                    $('.toast-body').append('status ' + response.status + ' ' + response.message)
                                         window.location.href = '../profile';
  
                                 } else {
-                                    alert('Error ' + response.status + ' ' + response.message)
+                                    $('.toast').toast('show')
+                                    $('.toast-body').empty()
+                                    $('.toast-body').append('Error ' + response.status + ' ' + response.message)                                    
+                                    //alert('Error ' + response.status + ' ' + response.message)
                                 }
                             }).catch(error => {
                                 alert(error)
                             })
                     } else {
-                        alert('update credentials incomplete')
+                        $('.toast').toast('show')
+                        $('.toast-body').empty()
+                        $('.toast-body').append('Faltan datos por ingresar')
+                        //alert('update credentials incomplete')
                     }
 
                 }
