@@ -123,8 +123,8 @@ exports.editParticipants = (score, matchId, teamId) => {
   return handler(queries.editMatchParticipants, [score, matchId, teamId], db.none);
 }
 
-exports.getBetsByDay = (date) => {
-return handler(queries.getBetsInDay, [date], true, db.any);
+exports.getBetsByDay = (date1, date2) => {
+return handler(queries.getBetsInDay, [date1, date2], true, db.any);
 }
 
 exports.getBetsByRange = (date) => {
