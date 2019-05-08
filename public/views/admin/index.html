@@ -102,7 +102,7 @@
                             <div class="input-group col-sm-8 mt-2">
                                             <div class="input-group mb-3">
 
-                                                    <select class="custom-select " id="torneos" aria-label="Example select with button addon">
+                                                    <select class="custom-select " id="torneos" aria-label="Example select with button addon" onchange="changeSearch(this.value)">
 
                                                     </select>
                                                     <div class="input-group-prepend">
@@ -357,9 +357,9 @@ let deleteTeam = (id) =>{
   })  
 }
 
-let changeSearch = (text,id) =>{
-selectedTournament = id
-document.getElementById('searchInput').value = text
+let changeSearch = (id) =>{
+  console.log('fuck')
+selectedTournament = id;
 }
 
 let addTourney = (obj) =>{
@@ -554,13 +554,13 @@ let searchMatches = () =>{
 
 let annexTourney = (obj) =>{
   $("#torneos").append(
-    `<option value="1" onclick="changeSearch('${obj.tournaments_name}',${obj.tournaments_id})">${obj.tournaments_name}</option>`
+    `<option value="${obj.tournaments_id}" onclick="changeSearch(${obj.tournaments_id})">${obj.tournaments_name}</option>`
   )
   $('#team_t').append(
     `<option value="${obj.tournaments_id}">${obj.tournaments_name}</option>`
   )
   $('#match_t').append(
-    `<option value="${obj.tournaments_id}">${obj.tournaments_name}</option>`
+    `<option onclick="changeSearch(${obj.tournaments_id})" value="${obj.tournaments_id}">${obj.tournaments_name}</option>`
   )
 }
 let annexCountry = (obj) =>{
@@ -583,7 +583,7 @@ $("#clearTeams").on("click", ()=>{
   removeSearch("#accordionTeam")
 })
 
-$("#clearMatches").on("click", ()=>{
+$("#clearMatch").on("click", ()=>{
   removeSearch("#matchesList")
 })
 
