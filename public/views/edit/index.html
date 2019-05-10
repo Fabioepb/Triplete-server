@@ -124,7 +124,7 @@
             update = () => {
                     let data = getData();
                     if (validateInput(data)) {
-                        fetch('http://localhost:3000/profile', {
+                        fetch('../../profile', {
                                 method: 'PUT',
                                 headers: {
                                     'Content-Type': 'application/json',

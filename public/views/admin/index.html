@@ -256,7 +256,7 @@ let deleteTourney = (id) =>{
   data ={
     tournament_id:id
   }
-  let url = "http://localhost:3000/Tournaments/"
+  let url = "../../Tournaments/"
   fetch(url,{
     method: 'DELETE',
     headers: {
@@ -291,7 +291,7 @@ let deleteMatch = (id) =>{
   data ={
     matchId:id
   }
-  let url = "http://localhost:3000/Match/" 
+  let url = "../../Match/" 
   fetch(url,{
     method: 'DELETE',
     headers: {
@@ -326,7 +326,7 @@ let deleteTeam = (id) =>{
     teamId:id
   }
   console.log(data)
-  let url = "http://localhost:3000/Teams/?teamId="+id; 
+  let url = "../../Teams/?teamId="+id; 
   fetch(url,{
     method: 'DELETE',
     /*headers: {
@@ -383,7 +383,7 @@ let insertTeam = () =>{
   }
   console.log(data)
   if(data.team_name !=''){
-  let url = "http://localhost:3000/Teams/" 
+  let url = "../../Teams/" 
   fetch(url,{
     method: 'POST',
     headers: {
@@ -424,7 +424,7 @@ let insertMatch = () =>{
 
   }
   if(data.match_date !=''){
-  let url = "http://localhost:3000/Match/" 
+  let url = "../../Match/" 
   fetch(url,{
     method: 'POST',
     headers: {
@@ -464,7 +464,7 @@ let insertTor = () =>{
 
   }
   if(data.tournament_name !=''){
-  let url = "http://localhost:3000/Tournaments/" 
+  let url = "../../Tournaments/" 
   fetch(url,{
     method: 'POST',
     headers: {
@@ -502,9 +502,9 @@ let searchTeams = () =>{
   let search = $("#searchTeam")[0].value;
 
   if(search.trim() == ''){
-    url = "http://localhost:3000/Teams"
+    url = "../../Teams"
   }else{
-    url= "http://localhost:3000/Teams/" + search
+    url= "../../Teams/" + search
   }
 
   fetch(url,{
@@ -532,7 +532,7 @@ let searchTeams = () =>{
 let selectedTournament;
 
 let searchMatches = () =>{
-  fetch("http://localhost:3000/Matchs/"+selectedTournament,{
+  fetch("../../Matchs/"+selectedTournament,{
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -550,7 +550,7 @@ let searchMatches = () =>{
     console.log(res)
   })
 }
-fetch("http://localhost:3000/Matchs/"+1,{
+fetch("../../Matchs/"+1,{
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -602,7 +602,7 @@ $("#clearMatch").on("click", ()=>{
   removeSearch("#matchesList")
 })
 
-fetch('http://localhost:3000/Tournaments',{
+fetch('../../Tournaments',{
   method: 'GET',
   headers: {
     'Content-Type': 'application/json'
@@ -619,7 +619,7 @@ fetch('http://localhost:3000/Tournaments',{
     });
   }
 })
-fetch('http://localhost:3000/Country',{
+fetch('../../Country',{
   method: 'GET',
   headers: {
     'Content-Type': 'application/json'
@@ -635,7 +635,7 @@ fetch('http://localhost:3000/Country',{
     });
   }
 })
-fetch('http://localhost:3000/Teams',{
+fetch('../../Teams',{
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'

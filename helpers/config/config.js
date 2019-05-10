@@ -8,7 +8,7 @@ const config = {
     max: 20,
     min: 5
   },
-  port: 3000,
+  port: 3500,
   secretOrKey: 'PlusUltra',
   saltRounds: 10
 }

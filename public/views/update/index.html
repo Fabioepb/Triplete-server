@@ -73,7 +73,7 @@ let annexCountry = (obj) =>{
   )
 }
 
-fetch('http://localhost:3000/Country',{
+fetch('../../Country',{
   method: 'GET',
   headers: {
     'Content-Type': 'application/json'
@@ -92,7 +92,7 @@ fetch('http://localhost:3000/Country',{
 
 let getTeam = (id) =>{
 
-    url= "http://localhost:3000/Team/" + id;
+    url= "../../Team/" + id;
   
 
   fetch(url,{
@@ -127,7 +127,7 @@ let modifTeam = (id) =>{
   };
   if(data.name !=''){
   console.log(data)
-  let url = "http://localhost:3000/Team/"+id 
+  let url = "../../Team/"+id 
   fetch(url,{
     method: 'PUT',
     headers: {

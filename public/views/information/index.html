@@ -168,10 +168,10 @@
                         </div>
                         <div class="text-center">
                         <label style="color:#fff;display:block">Odd:</label>
-                        <input class="form-control bet-input w-15" type="number" id="betOdd" oninput="validity.valid||(value='');" min='0' placeholder="0" disabled>
+                        <input class="form-control bet-input w-15" type="number" id="betOdd" oninput="validity.valid||(value='');" min='0' placeholder="0" disabled><input  type="number" id="matchId" disabled hidden>
                         </div>
                         <br>
-                        <button class="btn btn-outline-success mt-2 text-center" data-dismiss="modal" onclick="bet(${obj.match_id})" style="margin-left: 42%;">Apostar</button>
+                        <button class="btn btn-outline-success mt-2 text-center" data-dismiss="modal" onclick="bet()" style="margin-left: 42%;">Apostar</button>
                       </div>
                     </div>
                   </div>
@@ -180,7 +180,9 @@
             $('#nombres')[0].innerHTML = `<p style="padding-top: 7%;">${obj.teams.local.name} vs ${obj.teams.visitante.name}</p>`
             $('#nombrelocal')[0].innerHTML = obj.teams.local.name
             $('#nombrevisitante')[0].innerHTML = obj.teams.visitante.name
-            $('#betOdd')[0].value =((Math.random()+0.2)/Math.random())*10                     
+            $('#betOdd')[0].value =((Math.random()+0.2)/Math.random())*10
+            $('#matchId')[0].value =obj.match_id                     
+
         
           })
       }
@@ -190,9 +192,9 @@
                 </br>Fecha:${obj.match_date}</button>`
             )
         }
-let bet = (matchId)=>{
+let bet = ()=>{
 	data = {
-    matchId:matchId,
+    matchId:$('#matchId')[0].value,
     betPayment:$('#betPayment')[0].value,
     betOdd:$('#betOdd')[0].value,
     team1Score:$('#team1')[0].value,
@@ -201,7 +203,7 @@ let bet = (matchId)=>{
     }
     console.log(data)
     if(data.betPayment !=0 && data.betPayment !='' && data.team1Score !='' && data.team2Score !=''){ 
-	let url = "http://localhost:3000/bet"//falta
+	let url = "../../bet"//falta
 
         fetch(url,{
           method: 'POST',
@@ -260,9 +262,9 @@ $('.toast').toast({delay:2000})
         let search = $("#searchTeam")[0].value;
 
         if(search.trim() == ''){
-          url = "http://localhost:3000/Teams"
+          url = "../../Teams"
         }else{
-          url= "http://localhost:3000/Teams/" + search
+          url= "../../Teams/" + search
         }
 
         fetch(url,{
@@ -291,7 +293,7 @@ $('.toast').toast({delay:2000})
 
 
     let searchMatches = () =>{
-        fetch("http://localhost:3000/Matchs/"+selectedTournament,{
+        fetch("../../Matchs/"+selectedTournament,{
           method: 'GET',
           headers: {
 				    'Content-Type': 'application/json'
@@ -312,7 +314,7 @@ $('.toast').toast({delay:2000})
           console.log(res)
         })
       }
-      fetch("http://localhost:3000/Matchs/"+1,{
+      fetch("../../Matchs/"+1,{
           method: 'GET',
           headers: {
 				    'Content-Type': 'application/json'
@@ -348,7 +350,7 @@ $('.toast').toast({delay:2000})
         removeSearch("#matchesList")
       })
 
-      fetch('http://localhost:3000/Tournaments',{
+      fetch('../../Tournaments',{
         method: 'GET',
         headers: {
 				  'Content-Type': 'application/json'
@@ -366,7 +368,7 @@ $('.toast').toast({delay:2000})
         }
       })
 
-      fetch('http://localhost:3000/Teams',{
+      fetch('../../Teams',{
           method: 'GET',
           headers: {
 				    'Content-Type': 'application/json'

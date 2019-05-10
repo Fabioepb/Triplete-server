@@ -85,7 +85,7 @@
 
 let getMatch = (id) =>{
 
-    url= "http://localhost:3000/Match/" + id;
+    url= "../../Match/" + id;
     
   fetch(url,{
     method: 'GET',
@@ -127,7 +127,7 @@ let modifMatch = (id) =>{
   };
   if(data.team1Score !='' && data.team2Score !=''){
   console.log(data)
-  let url = "http://localhost:3000/Match/" 
+  let url = "../../Match/" 
   fetch(url,{
     method: 'PUT',
     headers: {
